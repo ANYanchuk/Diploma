@@ -1,0 +1,10 @@
+.nav-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-btn {
+  height: 50px;
+  width: 50px;
+}
