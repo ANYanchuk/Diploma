@@ -1,9 +1,7 @@
 using AutoMapper;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+
+using TaskManager.Core.Constants;
 using TaskManager.Core.Services;
 using TaskManager.Core.Models;
 using TaskManager.Core.Models.Entities;
@@ -29,10 +27,8 @@ namespace TaskManager.Data.Services
 
         public ServiceResponse<string> Register(UserEntity user, string password)
         {
-            if (password is null)
-                return new(false, message: "NULLOV");
             if(context.Users.Any(u => u.Email == user.Email))
-                return new(false, message: "Email already exists");
+                return new(false, message: AuthResponseConstants.EmailExists);
 
             string hashedPassword = PasswordHasher.HashPassword(password);
             ApplicationUser appUser = mapper.Map<ApplicationUser>(user);
@@ -48,9 +44,9 @@ namespace TaskManager.Data.Services
         {
             ApplicationUser? user = context.Users.FirstOrDefault(u => u.Email == email);
             if (user is null)
-                return new(false, message: "Email incorrect");
+                return new(false, message: AuthResponseConstants.EmailNotFound);
             if (!PasswordHasher.VerifyPassword(password, user.PasswordHash))
-                return new(false, message: "Incorrect passsword");
+                return new(false, message: AuthResponseConstants.IncorrectPassword);
 
             string token = GetToken(user, configuration);
 

@@ -1,10 +1,12 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using TaskManager.Data.DbContexts;
 using TaskManager.Core.Models.Data;
 using TaskManager.Core.Models.Entities;
 using TaskManager.Core.Models;
 using TaskManager.Core.Services;
+using TaskManager.Core.Constants;
+
+using TaskManager.Data.DbContexts;
 
 namespace TaskManager.Data.Services;
 public class TasksService : ITasksService
@@ -19,9 +21,9 @@ public class TasksService : ITasksService
 
     public ServiceResponse<ErrandEntity> GetById(uint id)
     {
-        Errand? task = context.Errands.FirstOrDefault(t => t.Id == id);
+        Errand? task = context.Errands.Include(e => e.Users).FirstOrDefault(t => t.Id == id);
         if (task is null)
-            return new(false, "ERROROV");
+            return new(false, message: ServiceResponceConstants.EntityNotFound);
         else
             return new(true, data: mapper.Map<ErrandEntity>(task));
     }
@@ -39,7 +41,8 @@ public class TasksService : ITasksService
     {
         IEnumerable<Errand> errands = context.Errands
             .Include(t => t.Users)
-            .Include(t => t.Users).ToList().Where(e => e.Users.Select(u => u.Id).Contains(userId));
+            .Include(t => t.Users).ToList()
+            .Where(e => e.Users.Select(u => u.Id).Contains(userId));
         IEnumerable<ErrandEntity> errandEntities = mapper.Map<IEnumerable<ErrandEntity>>(errands);
         return new(true, data: mapper.Map<IEnumerable<ErrandEntity>>(errandEntities));
     }
@@ -48,6 +51,8 @@ public class TasksService : ITasksService
     {
         IEnumerable<uint> ids = taskEntity.Users.Select(u => u.Id);
         IEnumerable<ApplicationUser> users = context.Users.Where(u => ids.Contains(u.Id));
+        if (!users.Any())
+            return new(false, TasksServiceConstants.UsersNotFound);
         Errand task = mapper.Map<Errand>(taskEntity);
         task.Users = users.ToList();
         context.Errands.Add(task);
@@ -55,7 +60,7 @@ public class TasksService : ITasksService
         if (result != 0)
             return new ServiceResponse<ErrandEntity>(true);
         else
-            return new ServiceResponse<ErrandEntity>(false, "ERROROV");
+            return new ServiceResponse<ErrandEntity>(false, ServiceResponceConstants.NothingChanged);
     }
 
     public ServiceResponse<ErrandEntity> Edit(ErrandEntity taskEntity, uint id = 0)
@@ -65,7 +70,7 @@ public class TasksService : ITasksService
             .FirstOrDefault(e => e.Id == id);
 
         if (errand is null)
-            return new ServiceResponse<ErrandEntity>(false, "NULLOV"); ;
+            return new ServiceResponse<ErrandEntity>(false, ServiceResponceConstants.EntityNotFound);
 
         taskEntity.Id = id;
         IEnumerable<uint> ids = taskEntity.Users.Select(u => u.Id);
@@ -83,14 +88,14 @@ public class TasksService : ITasksService
         if (result != 0)
             return new ServiceResponse<ErrandEntity>(true);
         else
-            return new ServiceResponse<ErrandEntity>(false, "NECHEGO MENIAT");
+            return new ServiceResponse<ErrandEntity>(false, ServiceResponceConstants.NothingChanged);
     }
 
     public ServiceResponse<string> Delete(uint id)
     {
         Errand? errand = context.Errands.FirstOrDefault(e => e.Id == id);
         if (errand is null)
-            return new(false, message: "NULLOV");
+            return new(false, message: ServiceResponceConstants.EntityNotFound);
 
         context.Errands.Remove(errand);
         context.SaveChanges();
