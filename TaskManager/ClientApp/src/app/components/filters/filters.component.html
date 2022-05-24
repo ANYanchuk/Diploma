@@ -1,0 +1,32 @@
+<div class="filters-container">
+  <mat-form-field>
+    <input matInput placeholder="Фільтр" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Дата з</mat-label>
+    <input matInput [matDatepicker]="pickerFrom" />
+    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFrom></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Дата по</mat-label>
+    <input matInput [matDatepicker]="pickerTo" />
+    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerTo></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Тип</mat-label>
+    <mat-select>
+      <mat-option value="Індивідуальне">Індивідуальне</mat-option>
+      <mat-option value="Групове">Групове</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Статус</mat-label>
+    <mat-select>
+      <mat-option value="Виконано">Виконано</mat-option>
+      <mat-option value="Виконується">Виконується</mat-option>
+      <mat-option value="Перевіряється">Перевіряється</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

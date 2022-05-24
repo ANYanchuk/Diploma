@@ -10,25 +10,44 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoginComponent } from './components/login/login.component';
 import { MatCardModule } from '@angular/material/card';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ErrandsComponent } from './components/errands/errands.component';
+import { FiltersComponent } from './components/filters/filters.component';
+import { AuthGuard } from './guards/auth.guard';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ErrandComponent } from './components/errand/errand.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
   },
+  {
+    path: 'errands',
+    canActivate: [AuthGuard],
+    component: ErrandsComponent,
+  },
 ];
 
 @NgModule({
-  declarations: [AppComponent, NavMenuComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    LoginComponent,
+    ErrandsComponent,
+    FiltersComponent,
+    ErrandComponent,
+  ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
@@ -40,6 +59,11 @@ const routes: Routes = [
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

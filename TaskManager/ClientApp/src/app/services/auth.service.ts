@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserRole } from '../components/models/user.model';
+
+const mockUser = { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD };
 
 @Injectable({
   providedIn: 'root',
@@ -16,23 +19,26 @@ export class AuthService {
     return this.authUser.value;
   }
 
+  get role() {
+    return this.authUser.value?.role || null;
+  }
+
   constructor(private router: Router) {
     this.checkStorage();
   }
 
   checkStorage() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || 'asdasdasd';
     if (token) {
-      const user = { id: 1, name: 'Андрій' };
-      this.authUser.next(user);
+      this.login();
       return;
     }
     this.router.navigateByUrl('/login');
   }
 
   login() {
-    const user = { id: 1, name: 'Андрій' };
-    this.authUser.next(user);
+    this.authUser.next(mockUser);
+    this.router.navigateByUrl('/errands');
   }
 
   logout() {

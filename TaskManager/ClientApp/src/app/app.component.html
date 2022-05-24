@@ -4,8 +4,13 @@
   </mat-drawer>
   <mat-drawer-content>
     <mat-toolbar class="toolbar">
+      <h5>{{ title }}</h5>
       <div class="toolbar-spacer"></div>
-      <button mat-button>Увійти</button>
+      <div class="user-info">
+        <span class="user-name">{{currentUser?.firstName + ' ' + currentUser?.lastName}}</span>
+        <span class="user-role">{{currentUser?.role}}</span>
+      </div>
+      <button mat-button *ngIf="currentUser">Вийти</button>
     </mat-toolbar>
     <main class="main">
       <router-outlet></router-outlet>
