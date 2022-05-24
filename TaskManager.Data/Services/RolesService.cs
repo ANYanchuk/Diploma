@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Data.DbContexts;
+using TaskManager.Core.Constants;
 using TaskManager.Core.Models.Data;
-using TaskManager.Core.Models.Entities;
 using TaskManager.Core.Models;
 using TaskManager.Core.Services;
 
@@ -32,14 +32,14 @@ public class RolesService : IRolesService
         if (result != 0)
             return new ServiceResponse<string>(true);
         else
-            return new ServiceResponse<string>(false, "NECHEGO MENIAT");
+            return new ServiceResponse<string>(false, ServiceResponceConstants.NothingChanged);
     }
 
     public ServiceResponse<string> Delete(string role)
     {
         ApplicationRole? appRole = context.Roles.FirstOrDefault(e => e.Name == role);
         if (appRole is null)
-            return new(false, message: "NULLOV");
+            return new(false, message: ServiceResponceConstants.EntityNotFound);
 
         context.Roles.Remove(appRole);
         context.SaveChanges();

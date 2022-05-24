@@ -16,7 +16,7 @@ public class FileStorageService : IFileStorageService
                 stream.Write(file.content, 0, file.content.Length);
             }
         }
-        return new(true, "OK");
+        return new(true);
     }
 
     public ServiceResponse<string> DeleteFiles(IEnumerable<string> filePathes)
@@ -27,6 +27,6 @@ public class FileStorageService : IFileStorageService
             if (f.Exists)
                 f.Delete();
         }
-        return new(true, "OK");
+        return new(true);
     }
 }
