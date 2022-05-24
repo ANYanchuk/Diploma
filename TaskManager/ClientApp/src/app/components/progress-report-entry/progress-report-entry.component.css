@@ -1,0 +1,13 @@
+mat-panel-title {
+  width: 150px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.title {
+  align-items: center;
+}

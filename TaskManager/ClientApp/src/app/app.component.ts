@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   TITLE: Record<string, string> = {
     '/errands': 'Доручення',
     '/distribution-report': 'Відомість розподілу доручень',
+    '/progress-report': 'Відомість виконання доручень',
   };
 
   get title() {

@@ -1,0 +1,7 @@
+<mat-card class="progress-report-container">
+  <app-filters></app-filters>
+  <app-progress-report-entry
+    *ngFor="let errand of errands"
+    [errand]="errand"
+  ></app-progress-report-entry>
+</mat-card>

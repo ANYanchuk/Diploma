@@ -1,0 +1,14 @@
+<mat-expansion-panel class="errand-container">
+  <mat-expansion-panel-header>
+    <mat-panel-title class="title">{{ errand.name }}</mat-panel-title>
+    <mat-panel-description class="info">
+      <div>Тип: {{ errand.type }}</div>
+      <div>Форма звіту: {{ errand.reportType }}</div>
+      <div class="dates">
+        <div>Видано: {{ errand.dateFrom }}</div>
+        <div>Дедлайн: {{ errand.dateTo }}</div>
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+<!--  <table mat-table></table>-->
+</mat-expansion-panel>

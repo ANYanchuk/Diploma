@@ -14,10 +14,13 @@ export const errands = [
       { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD },
       { id: 1, firstName: 'Влад', lastName: 'Григорович', role: UserRole.LEAD },
     ],
-    report: {
-      text: 'Текст звіту',
-      file: 'Звіт.docx',
-    },
+    reports: [
+      {
+        text: 'Текст звіту',
+        file: 'Звіт.docx',
+        user: { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD }
+      }
+    ]
   },
   {
     name: 'Провести лекцію',

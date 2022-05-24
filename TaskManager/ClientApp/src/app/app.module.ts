@@ -26,7 +26,9 @@ import { ErrandComponent } from './components/errand/errand.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { DistributionReportComponent } from './components/distribution-report/distribution-report.component';
 import { DistributionReportEntryComponent } from './components/distribution-report-entry/distribution-report-entry.component';
-import {MatTableModule} from "@angular/material/table";
+import { MatTableModule } from '@angular/material/table';
+import { ProgressReportComponent } from './components/progress-report/progress-report.component';
+import { ProgressReportEntryComponent } from './components/progress-report-entry/progress-report-entry.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: DistributionReportComponent,
   },
+  {
+    path: 'progress-report',
+    canActivate: [AuthGuard],
+    component: ProgressReportComponent,
+  },
 ];
 
 @NgModule({
@@ -55,10 +62,12 @@ const routes: Routes = [
     ErrandComponent,
     DistributionReportComponent,
     DistributionReportEntryComponent,
+    ProgressReportComponent,
+    ProgressReportEntryComponent,
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
