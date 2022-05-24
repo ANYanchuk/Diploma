@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   TITLE: Record<string, string> = {
     '/errands': 'Доручення',
+    '/distribution-report': 'Відомість розподілу доручень',
   };
 
   get title() {

@@ -3,7 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserRole } from '../components/models/user.model';
 
-const mockUser = { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD };
+const mockLead = { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD };
+const mockWorker = { id: 1, firstName: 'Владислав', lastName: 'Григорович', role: UserRole.LECTURER };
 
 @Injectable({
   providedIn: 'root',
@@ -37,8 +38,8 @@ export class AuthService {
   }
 
   login() {
-    this.authUser.next(mockUser);
-    this.router.navigateByUrl('/errands');
+    this.authUser.next(mockWorker);
+    this.router.navigateByUrl('/distribution-report');
   }
 
   logout() {

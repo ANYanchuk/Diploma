@@ -23,6 +23,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ErrandComponent } from './components/errand/errand.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { DistributionReportComponent } from './components/distribution-report/distribution-report.component';
+import { DistributionReportEntryComponent } from './components/distribution-report-entry/distribution-report-entry.component';
+import {MatTableModule} from "@angular/material/table";
 
 const routes: Routes = [
   {
@@ -34,6 +38,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: ErrandsComponent,
   },
+  {
+    path: 'distribution-report',
+    canActivate: [AuthGuard],
+    component: DistributionReportComponent,
+  },
 ];
 
 @NgModule({
@@ -44,10 +53,12 @@ const routes: Routes = [
     ErrandsComponent,
     FiltersComponent,
     ErrandComponent,
+    DistributionReportComponent,
+    DistributionReportEntryComponent,
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
@@ -64,6 +75,8 @@ const routes: Routes = [
     MatSelectModule,
     MatOptionModule,
     MatExpansionModule,
+    MatMenuModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

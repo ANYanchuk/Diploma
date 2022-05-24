@@ -1,5 +1,5 @@
 <div class="nav-menu-container">
-  <button mat-icon-button class="nav-btn">
+  <button mat-icon-button class="nav-btn" routerLink="/errands">
     <mat-icon>home</mat-icon>
   </button>
   <button mat-icon-button class="nav-btn">
@@ -8,10 +8,14 @@
   <button mat-icon-button class="nav-btn">
     <mat-icon>group</mat-icon>
   </button>
-  <button mat-icon-button class="nav-btn">
+  <button mat-icon-button class="nav-btn" routerLink="/errands">
     <mat-icon>bar_chart</mat-icon>
   </button>
-  <button mat-icon-button class="nav-btn">
+  <button mat-icon-button class="nav-btn" [matMenuTriggerFor]="menu">
     <mat-icon>book</mat-icon>
   </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/distribution-report">Розподіл доручень</button>
+    <button mat-menu-item routerLink="/progress-report">Виконання доручень</button>
+  </mat-menu>
 </div>
