@@ -41,12 +41,12 @@ const routes: Routes = [
     component: ErrandsComponent,
   },
   {
-    path: 'distribution-report',
+    path: 'progress-report-user',
     canActivate: [AuthGuard],
     component: DistributionReportComponent,
   },
   {
-    path: 'progress-report',
+    path: 'progress-report-errand',
     canActivate: [AuthGuard],
     component: ProgressReportComponent,
   },

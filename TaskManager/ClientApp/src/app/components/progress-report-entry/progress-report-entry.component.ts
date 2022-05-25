@@ -6,8 +6,12 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./progress-report-entry.component.css'],
 })
 export class ProgressReportEntryComponent implements OnInit {
-  @Input() errand: any;
+  @Input() entry: any;
+  dataSource = [];
+  columns = ['executorName', 'status', 'reportType', 'completedDate'];
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dataSource = this.entry.reports || [];
+  }
 }
