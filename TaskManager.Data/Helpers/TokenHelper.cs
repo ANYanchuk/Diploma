@@ -37,6 +37,12 @@ public static class TokenHelper
         return tokenHandler.ReadJwtToken(token).Claims.FirstOrDefault(c => c.Type == "Role")?.Value;
     }
 
+    public static string? GetId(string token)
+    {
+        JwtSecurityTokenHandler tokenHandler = new();
+        return tokenHandler.ReadJwtToken(token).Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+    }
+
     public static IEnumerable<Claim> DecodeToken(string token)
     {
         JwtSecurityTokenHandler tokenHandler = new();
