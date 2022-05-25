@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
 
 using TaskManager.Core.Models.Data;
 
@@ -14,20 +12,14 @@ public class ApplicationDbContext : DbContext
     public DbSet<Errand> Errands { get; set; }
     public DbSet<Report> Reports { get; set; }
     public DbSet<UploadedFile> Files { get; set; }
-    public DbSet<Category> Categories { get; set; }
     public DbSet<ReportFormat> ReportFormats { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Category>()
-            .HasData(
-                new Category("Лекція"),
-                new Category("Інше"));
-
         modelBuilder.Entity<ReportFormat>()
             .HasData(
                 new ReportFormat("Файл"),
-                new ReportFormat("Email"));
+                new ReportFormat("Текст"));
 
         modelBuilder.Entity<ApplicationRole>()
             .HasData(
@@ -37,9 +29,15 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Report>().HasMany(a => a.Files)
             .WithOne()
-            .HasForeignKey(f => f.AnswerId)
+            .HasForeignKey(f => f.ReportId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder
+            .Entity<ApplicationUser>()
+            .HasMany(u => u.Errands)
+            .WithMany(e => e.Users)
+            .UsingEntity(j => j.ToTable("UserErrands"));
 
         base.OnModelCreating(modelBuilder);
     }
