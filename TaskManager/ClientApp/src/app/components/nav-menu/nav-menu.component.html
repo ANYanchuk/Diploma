@@ -1,0 +1,22 @@
+<div class="nav-menu-container">
+  <button mat-icon-button class="nav-btn" routerLink="/errands">
+    <mat-icon>home</mat-icon>
+  </button>
+  <button mat-icon-button class="nav-btn">
+    <mat-icon>person</mat-icon>
+  </button>
+  <button mat-icon-button class="nav-btn">
+    <mat-icon>group</mat-icon>
+  </button>
+  <button mat-icon-button class="nav-btn" routerLink="/errands">
+    <mat-icon>bar_chart</mat-icon>
+  </button>
+  <button mat-icon-button class="nav-btn" [matMenuTriggerFor]="menu">
+    <mat-icon>book</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/distribution-report">Відомість розподілу доручень</button>
+    <button mat-menu-item routerLink="/progress-report-errand">Відомість виконання за дорученнями</button>
+    <button mat-menu-item routerLink="/progress-report-user">Відомість виконання за виконавцями</button>
+  </mat-menu>
+</div>

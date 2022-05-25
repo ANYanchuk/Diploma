@@ -1,0 +1,46 @@
+<mat-expansion-panel class="errand-container">
+  <mat-expansion-panel-header>
+    <mat-panel-title class="title"> {{ options.name }} </mat-panel-title>
+    <mat-panel-description class="info">
+      <div class="dates">
+        <div>Видано: {{ options.dateFrom }}</div>
+        <div>Дедлайн: {{ options.dateTo }}</div>
+      </div>
+      <div>Тип: {{ options.type }}</div>
+      <div>Статус: {{ options.status }}</div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="description">
+    <h5>Опис</h5>
+    <p>
+      {{ options.description }}
+    </p>
+  </div>
+  <div *ngIf="role === UserRole.LEAD" class="executors">
+    <h5>Виконавці</h5>
+    <ol>
+      <li *ngFor="let executor of options.executors">
+        {{ executor.firstName + " " + executor.lastName }}
+      </li>
+    </ol>
+  </div>
+  <div *ngIf="role === UserRole.LEAD" class="report">
+    <ng-container *ngIf="options.report; else notUploaded">
+      <h5>Звіт</h5>
+      <p>
+        {{ options.report.text }}
+      </p>
+      <div class="uploaded-file">
+        <mat-icon>article</mat-icon>
+        {{ options.report.file }}
+      </div>
+      <div class="btns">
+        <button mat-button>Перевірити</button>
+        <button mat-button>Видалити</button>
+      </div>
+    </ng-container>
+    <ng-template #notUploaded>
+      <h5>Звіт не завантажений</h5>
+    </ng-template>
+  </div>
+</mat-expansion-panel>

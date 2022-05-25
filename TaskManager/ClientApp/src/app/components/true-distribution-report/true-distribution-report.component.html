@@ -1,0 +1,8 @@
+<mat-card class="distribution-report-container">
+  <app-distribution-report-entry
+    *ngFor="let user of users"
+    [user]="user"
+    [errands]="errands"
+    [distr]="true"
+  ></app-distribution-report-entry>
+</mat-card>

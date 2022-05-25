@@ -14,3 +14,24 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-expansion-panel {
+  box-shadow: none !important;
+  border: solid 1px rgba(0, 0, 0, 0.12) !important;
+  border-radius: 0 !important;
+}
+.mat-expansion-panel > .mat-expansion-panel-header {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+}
+.mat-expansion-panel-body {
+  margin-top: 10px;
+}

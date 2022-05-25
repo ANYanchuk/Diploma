@@ -1,6 +1,19 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
-</body>
+<mat-drawer-container class="example-container">
+  <mat-drawer class="sidenav" mode="side" opened>
+    <app-nav-menu></app-nav-menu>
+  </mat-drawer>
+  <mat-drawer-content>
+    <mat-toolbar class="toolbar">
+      <h5>{{ title }}</h5>
+      <div class="toolbar-spacer"></div>
+      <div class="user-info">
+        <span class="user-name">{{currentUser?.firstName + ' ' + currentUser?.lastName}}</span>
+        <span class="user-role">{{currentUser?.role}}</span>
+      </div>
+      <button mat-button *ngIf="currentUser">Вийти</button>
+    </mat-toolbar>
+    <main class="main">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>
