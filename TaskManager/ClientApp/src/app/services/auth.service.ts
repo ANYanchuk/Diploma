@@ -39,7 +39,7 @@ export class AuthService {
 
   login() {
     this.authUser.next(mockLead);
-    this.router.navigateByUrl('/progress-report');
+    this.router.navigateByUrl('/errands');
   }
 
   logout() {

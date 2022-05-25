@@ -29,6 +29,7 @@ import { DistributionReportEntryComponent } from './components/distribution-repo
 import { MatTableModule } from '@angular/material/table';
 import { ProgressReportComponent } from './components/progress-report/progress-report.component';
 import { ProgressReportEntryComponent } from './components/progress-report-entry/progress-report-entry.component';
+import { TrueDistributionReportComponent } from './components/true-distribution-report/true-distribution-report.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: ProgressReportComponent,
   },
+  {
+    path: 'distribution-report',
+    canActivate: [AuthGuard],
+    component: TrueDistributionReportComponent,
+  },
 ];
 
 @NgModule({
@@ -64,6 +70,7 @@ const routes: Routes = [
     DistributionReportEntryComponent,
     ProgressReportComponent,
     ProgressReportEntryComponent,
+    TrueDistributionReportComponent,
   ],
   imports: [
     BrowserAnimationsModule,

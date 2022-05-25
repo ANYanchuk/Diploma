@@ -10,9 +10,20 @@ export class DistributionReportEntryComponent implements OnInit {
   @Input() user: any;
   @Input() errands = errands;
 
-  columns = ['name', 'dateFrom', 'dateTo', 'dateCompleted', 'status', 'report'];
+  @Input() distr = false;
+
+  columnsNonDistr = ['name', 'dateFrom', 'dateTo', 'dateCompleted', 'status', 'report'];
+  columnsDistr = ['name', 'description'];
+
+  columns: any[] = [];
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.distr) {
+      this.columns = this.columnsDistr;
+    } else {
+      this.columns = this.columnsNonDistr;
+    }
+  }
 }
