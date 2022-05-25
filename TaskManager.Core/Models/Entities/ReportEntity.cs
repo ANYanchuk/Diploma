@@ -14,11 +14,11 @@ public class ReportEntity
         Comment = comment;
     }
     [Key]
-    public int Id { get; set; }
+    public uint Id { get; set; }
 
     public int ErrandId { get; set; }
     public ErrandEntity Errand { get; set; }
     public DateTime LastChanged { get; private set; }
-
+    public List<FileEntity> Files { get; set; }
     public string? Comment { get; set; }
 }

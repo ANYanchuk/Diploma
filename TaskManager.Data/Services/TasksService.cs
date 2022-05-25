@@ -13,15 +13,24 @@ public class TasksService : ITasksService
 {
     private readonly ApplicationDbContext context;
     private readonly IMapper mapper;
-    public TasksService(ApplicationDbContext repository, IMapper mapper)
+    private readonly IFileStorageService fileStorage;
+
+    public TasksService(ApplicationDbContext repository, IMapper mapper, IFileStorageService fileStorage)
     {
+        this.fileStorage = fileStorage;
         context = repository;
         this.mapper = mapper;
     }
 
     public ServiceResponse<ErrandEntity> GetById(uint id)
     {
-        Errand? task = context.Errands.Include(e => e.Users).FirstOrDefault(t => t.Id == id);
+        Errand? task = context.Errands
+            .Include(t => t.Report)
+            .ThenInclude(r => r.Files)
+            .AsSplitQuery()
+            .Include(e => e.Users)
+            .FirstOrDefault(t => t.Id == id);
+
         if (task is null)
             return new(false, message: ServiceResponceConstants.EntityNotFound);
         else
@@ -31,8 +40,11 @@ public class TasksService : ITasksService
     public ServiceResponse<IEnumerable<ErrandEntity>> GetAll()
     {
         IEnumerable<Errand> tasks = context.Errands
-            .Include(t => t.Users)
-            .Include(t => t.Users).ToList();
+            .Include(t => t.Report)
+            .ThenInclude(r => r.Files)
+            .AsSplitQuery()
+            .Include(t => t.Users);
+
         IEnumerable<ErrandEntity> errandEntities = mapper.Map<IEnumerable<ErrandEntity>>(tasks);
         return new(true, data: mapper.Map<IEnumerable<ErrandEntity>>(errandEntities));
     }
@@ -40,8 +52,10 @@ public class TasksService : ITasksService
     public ServiceResponse<IEnumerable<ErrandEntity>> GetAllForUser(uint userId)
     {
         IEnumerable<Errand> errands = context.Errands
+            .Include(t => t.Report)
+            .ThenInclude(r => r.Files)
+            .AsSplitQuery()
             .Include(t => t.Users)
-            .Include(t => t.Users).ToList()
             .Where(e => e.Users.Select(u => u.Id).Contains(userId));
         IEnumerable<ErrandEntity> errandEntities = mapper.Map<IEnumerable<ErrandEntity>>(errands);
         return new(true, data: mapper.Map<IEnumerable<ErrandEntity>>(errandEntities));

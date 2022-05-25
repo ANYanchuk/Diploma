@@ -9,9 +9,10 @@ public class UploadedFile
         Path = path;
         Name = name;
     }
+
     [Key]
     public int Id { get; set; }
     public string Path { get; set; }
     public string Name { get; set; }
-    public int? AnswerId { get; set; }
+    public uint ReportId { get; set; }
 }

@@ -13,8 +13,7 @@ namespace TaskManager.ViewModels
         public List<UserIdViewModel> Users { get; set; }
         public string? Title { get; set; }
         public string? Body { get; set; }
-        public string? CategoryName { get; set; }
-        public string? ReportFormatName { get; set; }
+        public string Type { get; set; }
         public Priority Priority { get; set; }
         public DateTime Started { get; private set; }
         public DateTime? Deadline { get; set; }

@@ -1,16 +1,9 @@
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-using TaskManager.ViewModels;
 using TaskManager.Core.Services;
-using TaskManager.Core.Models.Entities;
 using TaskManager.Core.Models;
-using TaskManager.Data.Helpers;
 
 namespace TaskManager.Controllers
 {

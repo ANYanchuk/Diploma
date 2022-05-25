@@ -19,17 +19,18 @@ public class Errand
     public uint Id { get; set; }
     public string? Title { get; set; }
     public string? Body { get; set; }
-    public string CategoryName { get; set; } = "Інше";
-    public Category Category { get; set; }
     public string ReportFormatName { get; set; } = "Файл";
+    public string Type { get; set; }
     public ReportFormat ReportFormat { get; set; }
     public DateTime Started { get; private set; }
     public DateTime? Deadline { get; set; }
     public string State { get; set; }
-    public int? ReportId { get; set; }
     public Report? Report { get; set; }
     public ICollection<ApplicationUser> Users { get; set; }
+
     // Not needed
+    // public string CategoryName { get; set; } = "Інше";
+    // public Category Category { get; set; }
     // public Priority Priority { get; set; }
     // public uint? LeaderId { get; set; }
     // public ApplicationUser? Leader { get; set; }

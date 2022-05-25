@@ -20,10 +20,15 @@ namespace TaskManager.Controllers
     {
         private const string UserIdURL = "{userId}";
         private readonly ITasksService tasksService;
+        private readonly IReportsService reportsService;
         private readonly IMapper mapper;
 
-        public UsersController(ITasksService tasksService, IMapper mapper)
+        public UsersController(
+            ITasksService tasksService,
+            IMapper mapper,
+            IReportsService reportsService)
         {
+            this.reportsService = reportsService;
             this.tasksService = tasksService;
             this.mapper = mapper;
         }
@@ -32,7 +37,7 @@ namespace TaskManager.Controllers
         [Authorize]
         public ActionResult Get(uint userId)
         {
-            ServiceResponse<IEnumerable<ErrandEntity>> taskResponse = 
+            ServiceResponse<IEnumerable<ErrandEntity>> taskResponse =
                 tasksService.GetAllForUser(userId);
             if (taskResponse.IsSuccessfull)
                 return Ok(taskResponse.Data);
@@ -44,10 +49,38 @@ namespace TaskManager.Controllers
         public IActionResult Get(uint userId, uint errandId)
         {
             ServiceResponse<ErrandEntity> taskResponse = tasksService.GetById(errandId);
-            if (taskResponse.IsSuccessfull)
+            if (taskResponse.IsSuccessfull && taskResponse.Data.Users.Select(u => u.Id).Contains(userId))
                 return Ok(taskResponse.Data);
             else
                 return NotFound();
+        }
+
+        [HttpPost(UserIdURL + "/errands/{errandId}/report")]
+        public IActionResult AddReport(uint userId, uint errandId, [FromForm] ReportViewModel reportViewModel)
+        {
+            ReportEntity report = mapper.Map<ReportEntity>(reportViewModel);
+            IEnumerable<byte[]> files = mapper.Map<IEnumerable<byte[]>>(reportViewModel.Files);
+
+            IEnumerable<FileEntity> fileEntities = reportViewModel.Files
+                .Select(f => new FileEntity(f.FileName) { Content = mapper.Map<byte[]>(f) });
+
+            ServiceResponse<ReportEntity> response = reportsService.Add(errandId, report, fileEntities);
+
+            if (response.IsSuccessfull)
+                return StatusCode(201);
+            else
+                return BadRequest();
+        }
+
+        [HttpDelete(UserIdURL + "/errands/{errandId}/report")]
+        public IActionResult DeleteReport(uint userId, uint errandId)
+        {
+            ServiceResponse<ReportEntity> response = reportsService.Delete(errandId);
+
+            if (response.IsSuccessfull)
+                return StatusCode(201);
+            else
+                return BadRequest();
         }
     }
 }

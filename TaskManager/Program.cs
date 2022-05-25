@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using TaskManager.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,7 +22,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(EntityProfile), typeof(ViewModelProfile));
 
+builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 builder.Services.AddTransient<ITasksService, TasksService>();
+builder.Services.AddTransient<IReportsService, ReportsService>();
 builder.Services.AddTransient<IRolesService, RolesService>();
 builder.Services.AddTransient<IAuthServise, AuthServise>();
 
@@ -70,6 +73,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+// app.UseMiddleware<TokenMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

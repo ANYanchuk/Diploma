@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 
 using static TaskManager.Data.Helpers.TokenHelper;
 
+namespace TaskManager.Middlewares;
+
 public class TokenMiddleware
 {
     private readonly RequestDelegate _next;

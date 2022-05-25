@@ -1,9 +1,4 @@
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
@@ -38,6 +33,7 @@ namespace TaskManager.Controllers
                 return BadRequest(taskResponse.ErrorMessage);
         }
 
+        [Authorize(Roles = "Завідувач")]
         [HttpPost]
         public IActionResult Post(PostErrandViewModel errandViewModel)
         {
@@ -49,6 +45,7 @@ namespace TaskManager.Controllers
                 return BadRequest(response.ErrorMessage);
         }
 
+        [Authorize(Roles = "Завідувач")]
         [HttpPut("{id}")]
         public IActionResult Put(PostErrandViewModel errandViewModel, [FromRoute] uint id)
         {
@@ -60,6 +57,7 @@ namespace TaskManager.Controllers
                 return BadRequest(response.ErrorMessage);
         }
 
+        [Authorize(Roles = "Завідувач")]
         [HttpDelete("{id}")]
         public IActionResult Delete([FromRoute] uint id)
         {
