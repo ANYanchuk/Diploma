@@ -1,7 +1,11 @@
 <mat-card class="distribution-report-container">
+  <button mat-raised-button style="margin-bottom: 10px">Експорт</button>
   <app-distribution-report-entry
-    *ngFor="let user of users"
-    [user]="user"
-    [errands]="errands"
+    [user]="users[0]"
+    [errands]="errands.slice(2)"
+  ></app-distribution-report-entry>
+  <app-distribution-report-entry
+    [user]="users[1]"
+    [errands]="errands.slice(0, 2)"
   ></app-distribution-report-entry>
 </mat-card>

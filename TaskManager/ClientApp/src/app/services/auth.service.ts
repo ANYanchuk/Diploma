@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   checkStorage() {
-    const token = localStorage.getItem('token') || 'asdasdasd';
+    const token = localStorage.getItem('token');
     if (token) {
       this.login();
       return;

@@ -7,8 +7,8 @@
       <h5>{{ title }}</h5>
       <div class="toolbar-spacer"></div>
       <div class="user-info">
-        <span class="user-name">{{currentUser?.firstName + ' ' + currentUser?.lastName}}</span>
-        <span class="user-role">{{currentUser?.role}}</span>
+        <span *ngIf="currentUser" class="user-name">{{currentUser?.firstName + ' ' + currentUser?.lastName}}</span>
+        <span *ngIf="currentUser" class="user-role">{{currentUser?.role}}</span>
       </div>
       <button mat-button *ngIf="currentUser">Вийти</button>
     </mat-toolbar>

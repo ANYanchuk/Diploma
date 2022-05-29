@@ -34,4 +34,8 @@ body {
 }
 .mat-expansion-panel-body {
   margin-top: 10px;
+  padding: 0 !important;
+}
+.mat-expansion-panel-header-title {
+  font-weight: bold;
 }

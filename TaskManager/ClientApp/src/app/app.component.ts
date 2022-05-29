@@ -12,6 +12,8 @@ export class AppComponent implements OnInit {
     '/errands': 'Доручення',
     '/distribution-report': 'Відомість розподілу доручень',
     '/progress-report': 'Відомість виконання доручень',
+    '/progress-report-errand': 'Відомість по дорученням',
+    '/progress-report-user': 'Видомість по виконавцям',
   };
 
   get title() {
