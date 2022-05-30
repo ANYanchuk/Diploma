@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>{{ mode === 'create' ? 'Створити доручення' : 'Редагувати доручення' }}</h2>
+<mat-dialog-content class="errand-form-container">
+  <div class="input-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Назва доручення</mat-label>
+      <input matInput />
+    </mat-form-field>
+  </div>
+  <div class="input-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Опис доручення</mat-label>
+      <textarea rows="3" cdkTextareaAutosize matInput> </textarea>
+    </mat-form-field>
+  </div>
+  <div class="input-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Тип</mat-label>
+      <mat-select>
+        <mat-option value="Індивідуальне">Індивідуальне</mat-option>
+        <mat-option value="Групове">Групове</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Дедлайн</mat-label>
+      <input matInput [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="input-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Виконавці</mat-label>
+      <mat-select multiple>
+        <mat-option value="Влад Григорович">Влад Григорович</mat-option>
+        <mat-option value="Андрій Янчук">Андрій Янчук</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Форма звітності</mat-label>
+      <mat-select>
+        <mat-option value="Файл">Файл</mat-option>
+        <mat-option value="Імейл">Імейл</mat-option>
+        <mat-option value="Дзвінок">Дзвінок</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Відміна</button>
+  <button mat-button>{{ this.mode === 'create' ? 'Створити' : 'Редагувати' }}</button>
+</mat-dialog-actions>

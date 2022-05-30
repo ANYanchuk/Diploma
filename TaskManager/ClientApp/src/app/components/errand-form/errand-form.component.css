@@ -1,0 +1,13 @@
+.errand-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  display: flex;
+  gap: 20px;
+}
+
+.input-group > mat-form-field {
+  flex: 1 1 auto;
+}

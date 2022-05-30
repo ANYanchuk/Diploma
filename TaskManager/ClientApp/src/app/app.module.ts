@@ -30,6 +30,8 @@ import { MatTableModule } from '@angular/material/table';
 import { ProgressReportComponent } from './components/progress-report/progress-report.component';
 import { ProgressReportEntryComponent } from './components/progress-report-entry/progress-report-entry.component';
 import { TrueDistributionReportComponent } from './components/true-distribution-report/true-distribution-report.component';
+import { ErrandFormComponent } from './components/errand-form/errand-form.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 const routes: Routes = [
   {
@@ -71,10 +73,11 @@ const routes: Routes = [
     ProgressReportComponent,
     ProgressReportEntryComponent,
     TrueDistributionReportComponent,
+    ErrandFormComponent,
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
@@ -93,6 +96,7 @@ const routes: Routes = [
     MatExpansionModule,
     MatMenuModule,
     MatTableModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

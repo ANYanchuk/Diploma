@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {errands} from "../mock-data/errands";
+import { errands } from '../mock-data/errands';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrandFormComponent } from '../errand-form/errand-form.component';
 
 @Component({
   selector: 'app-errands',
@@ -8,7 +10,13 @@ import {errands} from "../mock-data/errands";
 })
 export class ErrandsComponent implements OnInit {
   errands = errands;
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {}
+
+  openErrandsForm() {
+    this.dialog.open(ErrandFormComponent, {
+      minWidth: 600,
+    });
+  }
 }
