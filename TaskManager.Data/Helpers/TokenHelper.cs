@@ -21,7 +21,11 @@ public static class TokenHelper
             new Claim[]
             {
                     new Claim("Id", $"{user.Id}"),
-                    new Claim("Name", $"{user.LastName} {user.FirstName} {user.MiddleName}"),
+                    new Claim("FirstName", $"{user.FirstName}"),
+                    new Claim("LastName", $"{user.LastName}"),
+                    new Claim("MiddleName", $"{user.MiddleName}"),
+                    new Claim("PhoneNumber", $"{user.PhoneNumber}"),
+                    new Claim("Role", user.RoleName),
                     new Claim("Email", user.Email),
                     new Claim(ClaimTypes.Role, user.RoleName)
             },
