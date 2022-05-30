@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { UserRole } from '../components/models/user.model';
+import { UserRole } from '../models/user.model';
 
 const mockLead = { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD };
 const mockWorker = { id: 1, firstName: 'Владислав', lastName: 'Григорович', role: UserRole.LECTURER };

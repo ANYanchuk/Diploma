@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { errands } from '../mock-data/errands';
+import { errands } from '../../mock-data/errands';
 
 @Component({
   selector: 'app-distribution-report-entry',

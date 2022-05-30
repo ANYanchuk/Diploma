@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { UserRole } from '../models/user.model';
+import { UserRole } from '../../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrandFormComponent } from '../errand-form/errand-form.component';
 

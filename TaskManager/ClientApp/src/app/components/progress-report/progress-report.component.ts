@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { errands } from '../mock-data/errands';
-import { UserRole } from '../models/user.model';
+import { UserRole } from '../../models/user.model';
 
 const progressReportEntries = [
   {

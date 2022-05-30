@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { errands } from '../mock-data/errands';
+import { Component, OnInit } from '@angular/core';
+import { errands } from '../../mock-data/errands';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrandFormComponent } from '../errand-form/errand-form.component';
 

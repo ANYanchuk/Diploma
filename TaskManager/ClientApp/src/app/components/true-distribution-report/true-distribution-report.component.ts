@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { errands } from '../mock-data/errands';
-import { UserRole } from '../models/user.model';
+import { errands } from '../../mock-data/errands';
+import { UserRole } from '../../models/user.model';
 
 const users = [
   { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD },
