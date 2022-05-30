@@ -1,22 +1,38 @@
 <div class="nav-menu-container">
-  <button mat-icon-button class="nav-btn" routerLink="/errands">
+  <button mat-icon-button class="nav-btn" routerLinkActive="active-link">
     <mat-icon>home</mat-icon>
   </button>
-  <button mat-icon-button class="nav-btn">
+  <button mat-icon-button class="nav-btn" routerLinkActive="active-link">
     <mat-icon>person</mat-icon>
   </button>
-  <button mat-icon-button class="nav-btn">
+  <button mat-icon-button class="nav-btn" routerLinkActive="active-link">
     <mat-icon>group</mat-icon>
   </button>
-  <button mat-icon-button class="nav-btn" routerLink="/errands">
+  <button
+    mat-icon-button
+    class="nav-btn"
+    routerLink="/errands"
+    routerLinkActive="active-link"
+  >
     <mat-icon>bar_chart</mat-icon>
   </button>
-  <button mat-icon-button class="nav-btn" [matMenuTriggerFor]="menu">
+  <button
+    mat-icon-button
+    class="nav-btn"
+    [matMenuTriggerFor]="menu"
+    [ngClass]="{ 'active-link': isReportPageOpened() }"
+  >
     <mat-icon>book</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/distribution-report">Відомість розподілу доручень</button>
-    <button mat-menu-item routerLink="/progress-report-errand">Відомість виконання за дорученнями</button>
-    <button mat-menu-item routerLink="/progress-report-user">Відомість виконання за виконавцями</button>
+    <button mat-menu-item routerLink="/distribution-report">
+      Відомість розподілу доручень
+    </button>
+    <button mat-menu-item routerLink="/progress-report-errand">
+      Відомість виконання за дорученнями
+    </button>
+    <button mat-menu-item routerLink="/progress-report-user">
+      Відомість виконання за виконавцями
+    </button>
   </mat-menu>
 </div>

@@ -7,10 +7,16 @@
       <h5>{{ title }}</h5>
       <div class="toolbar-spacer"></div>
       <div class="user-info">
-        <span *ngIf="currentUser" class="user-name">{{currentUser?.firstName + ' ' + currentUser?.lastName}}</span>
-        <span *ngIf="currentUser" class="user-role">{{currentUser?.role}}</span>
+        <span *ngIf="authenticatedUser" class="user-name">{{
+          authenticatedUser?.FirstName + ' ' + authenticatedUser?.LastName
+        }}</span>
+        <span *ngIf="authenticatedUser" class="user-role">{{
+          authenticatedUser?.Role
+        }}</span>
       </div>
-      <button mat-button *ngIf="currentUser">Вийти</button>
+      <button mat-button *ngIf="authenticatedUser" (click)="logout()">
+        Вийти
+      </button>
     </mat-toolbar>
     <main class="main">
       <router-outlet></router-outlet>

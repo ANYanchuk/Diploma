@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -10,7 +10,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatNativeDateModule, MatOptionModule, MatRippleModule } from '@angular/material/core';
+import {
+  MatNativeDateModule,
+  MatOptionModule,
+  MatRippleModule,
+} from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoginComponent } from './components/login/login.component';
 import { MatCardModule } from '@angular/material/card';
@@ -31,9 +35,10 @@ import { ProgressReportComponent } from './components/progress-report/progress-r
 import { ProgressReportEntryComponent } from './components/progress-report-entry/progress-report-entry.component';
 import { TrueDistributionReportComponent } from './components/true-distribution-report/true-distribution-report.component';
 import { ErrandFormComponent } from './components/errand-form/errand-form.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'errands', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
@@ -76,8 +81,9 @@ const routes: Routes = [
     ErrandFormComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserAnimationsModule,
-    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),

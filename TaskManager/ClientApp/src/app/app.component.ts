@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
+import { User } from './models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  TITLE: Record<string, string> = {
+  private readonly _titles: Record<string, string> = {
+    '/login': 'Вхід в систему',
     '/errands': 'Доручення',
     '/distribution-report': 'Відомість розподілу доручень',
     '/progress-report': 'Відомість виконання доручень',
@@ -17,20 +19,27 @@ export class AppComponent implements OnInit {
   };
 
   get title() {
-    return this.TITLE[this.router.url];
+    return this._titles[this._router.url];
   }
 
-  currentUser: null | any;
+  authenticatedUser: User | null;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private readonly _auth: AuthService,
+    private readonly _router: Router,
+  ) {}
 
   ngOnInit() {
     this.subscribeOnUserChanges();
   }
 
   subscribeOnUserChanges() {
-    this.auth.user$.subscribe(u => {
-      this.currentUser = u;
+    this._auth.user$.subscribe(u => {
+      this.authenticatedUser = u;
     });
+  }
+
+  logout() {
+    this._auth.logout();
   }
 }

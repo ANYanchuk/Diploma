@@ -1,7 +1,11 @@
 export interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
+  Id: number;
+  FirstName: string;
+  LastName: string;
+  MiddleName: string;
+  PhoneNumber: string;
+  Email: string;
+  Role: UserRole;
 }
 
 export enum UserRole {

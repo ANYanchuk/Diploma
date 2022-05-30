@@ -1,48 +1,79 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import jwtDecode from 'jwt-decode';
 import { Router } from '@angular/router';
-import { UserRole } from '../models/user.model';
+import { User } from '../models/user.model';
+import { HttpClient } from '@angular/common/http';
+import { LoginDto } from '../dto/login.dto';
 
-const mockLead = { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD };
-const mockWorker = { id: 1, firstName: 'Владислав', lastName: 'Григорович', role: UserRole.LECTURER };
+export enum LoginResult {
+  SUCCESS = 'SUCCESS',
+  ERROR = 'ERROR',
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly authUser = new BehaviorSubject<any>(null);
+  private readonly _url = `/api/auth`;
+  private readonly _authUserSubject = new BehaviorSubject<User | null>(null);
 
   get user$() {
-    return this.authUser.asObservable();
+    return this._authUserSubject.asObservable();
   }
 
   get user() {
-    return this.authUser.value;
+    return this._authUserSubject.value;
   }
 
   get role() {
-    return this.authUser.value?.role || null;
+    return this._authUserSubject.value?.Role || null;
   }
 
-  constructor(private router: Router) {
+  constructor(
+    private readonly _router: Router,
+    private readonly _http: HttpClient,
+  ) {
     this.checkStorage();
   }
 
   checkStorage() {
     const token = localStorage.getItem('token');
     if (token) {
-      this.login();
-      return;
+      this.decodeAndPropagate(token);
     }
-    this.router.navigateByUrl('/login');
   }
 
-  login() {
-    this.authUser.next(mockLead);
-    this.router.navigateByUrl('/errands');
+  async login(email: string, password: string): Promise<LoginResult> {
+    const loginUrl = `${this._url}/login`;
+    const dto: LoginDto = {
+      Email: email,
+      Password: password,
+    };
+    return this._http
+      .post(loginUrl, dto, {
+        responseType: 'text',
+      })
+      .toPromise()
+      .then(token => {
+        this.decodeAndPropagate(token);
+        return LoginResult.SUCCESS;
+      })
+      .catch(response => {
+        console.error(response.error);
+        return LoginResult.ERROR;
+      });
   }
 
   logout() {
-    this.authUser.next(null);
+    this._authUserSubject.next(null);
+    localStorage.removeItem('token');
+    this._router.navigateByUrl('/login');
+  }
+
+  private decodeAndPropagate(token: string): void {
+    const user = jwtDecode<User>(token);
+    this._authUserSubject.next(user);
+    localStorage.setItem('token', token);
   }
 }
