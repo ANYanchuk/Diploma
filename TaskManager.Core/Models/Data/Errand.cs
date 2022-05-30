@@ -11,18 +11,13 @@ namespace TaskManager.Core.Models.Data;
 
 public class Errand
 {
-    public Errand()
-    {
-        Started = DateTime.Now;
-    }
-
     public uint Id { get; set; }
     public string? Title { get; set; }
     public string? Body { get; set; }
     public string ReportFormatName { get; set; } = "Файл";
     public string Type { get; set; }
     public ReportFormat ReportFormat { get; set; }
-    public DateTime Started { get; private set; }
+    public DateTime Started { get;  set; }
     public DateTime? Deadline { get; set; }
     public string State { get; set; }
     public Report? Report { get; set; }

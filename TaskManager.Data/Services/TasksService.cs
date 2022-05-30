@@ -1,14 +1,16 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using TaskManager.Core.Models;
 using TaskManager.Core.Models.Data;
 using TaskManager.Core.Models.Entities;
-using TaskManager.Core.Models;
+using TaskManager.Core.Models.Shared;
 using TaskManager.Core.Services;
 using TaskManager.Core.Constants;
 
 using TaskManager.Data.DbContexts;
 
 namespace TaskManager.Data.Services;
+
 public class TasksService : ITasksService
 {
     private readonly ApplicationDbContext context;
@@ -43,7 +45,7 @@ public class TasksService : ITasksService
             .Include(t => t.Report)
             .ThenInclude(r => r.Files)
             .AsSplitQuery()
-            .Include(t => t.Users);
+            .Include(t => t.Users).ToList();
 
         IEnumerable<ErrandEntity> errandEntities = mapper.Map<IEnumerable<ErrandEntity>>(tasks);
         return new(true, data: mapper.Map<IEnumerable<ErrandEntity>>(errandEntities));
@@ -61,15 +63,39 @@ public class TasksService : ITasksService
         return new(true, data: mapper.Map<IEnumerable<ErrandEntity>>(errandEntities));
     }
 
-    public ServiceResponse<ErrandEntity> Add(ErrandEntity taskEntity)
+    public ServiceResponse<ErrandEntity> Add(ErrandEntity errandEntity)
     {
-        IEnumerable<uint> ids = taskEntity.Users.Select(u => u.Id);
+        IEnumerable<uint> ids = errandEntity.Users.Select(u => u.Id);
         IEnumerable<ApplicationUser> users = context.Users.Where(u => ids.Contains(u.Id));
         if (!users.Any())
             return new(false, TasksServiceConstants.UsersNotFound);
-        Errand task = mapper.Map<Errand>(taskEntity);
-        task.Users = users.ToList();
-        context.Errands.Add(task);
+
+        if (errandEntity.Type == TaskType.Collective)
+        {
+            Errand errand = mapper.Map<Errand>(errandEntity);
+            errand.Users = users.ToList();
+            errand.State = TaskState.Opened;
+            errand.Started = DateTime.Now;
+            context.Errands.Add(errand);
+        }
+        else if (errandEntity.Type == TaskType.Individual)
+        {
+            DateTime now = DateTime.Now;
+            IEnumerable<Errand> errands = users.Select(u =>
+            {
+                Errand errand = mapper.Map<Errand>(errandEntity);
+                errand.Users = new List<ApplicationUser> { u };
+                errand.State = TaskState.Opened;
+                errand.Started = now;
+                return errand;
+            });
+            context.Errands.AddRange(errands);
+        }
+        else
+        {
+            return new(false, TasksServiceConstants.TypeIncorrect);
+        }
+
         int result = context.SaveChanges();
         if (result != 0)
             return new ServiceResponse<ErrandEntity>(true);
@@ -77,7 +103,7 @@ public class TasksService : ITasksService
             return new ServiceResponse<ErrandEntity>(false, ServiceResponceConstants.NothingChanged);
     }
 
-    public ServiceResponse<ErrandEntity> Edit(ErrandEntity taskEntity, uint id = 0)
+    public ServiceResponse<ErrandEntity> Edit(ErrandEntity errandEntity, uint id = 0)
     {
         Errand? errand = context.Errands
             .Include(e => e.Users)
@@ -86,9 +112,9 @@ public class TasksService : ITasksService
         if (errand is null)
             return new ServiceResponse<ErrandEntity>(false, ServiceResponceConstants.EntityNotFound);
 
-        taskEntity.Id = id;
-        IEnumerable<uint> ids = taskEntity.Users.Select(u => u.Id);
-        mapper.Map<ErrandEntity, Errand>(taskEntity, errand);
+        errandEntity.Id = id;
+        IEnumerable<uint> ids = errandEntity.Users.Select(u => u.Id);
+        mapper.Map<ErrandEntity, Errand>(errandEntity, errand);
         var users = context.Users.Where(u => ids.Contains(u.Id)).ToList();
 
         foreach (var user in errand.Users)

@@ -1,11 +1,12 @@
 using AutoMapper;
 using TaskManager.Core.Constants;
+using TaskManager.Data.DbContexts;
+using TaskManager.Data.Helpers;
 using TaskManager.Core.Models;
 using TaskManager.Core.Models.Data;
 using TaskManager.Core.Models.Entities;
+using TaskManager.Core.Models.Shared;
 using TaskManager.Core.Services;
-using TaskManager.Data.DbContexts;
-using TaskManager.Data.Helpers;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -24,22 +25,35 @@ public class ReportsService : IReportsService
         this.mapper = mapper;
     }
 
-    public ServiceResponse<ReportEntity> Add(
-        uint errandId,
-        ReportEntity reportEntity,
-        IEnumerable<FileEntity> files)
+    public ServiceResponse<ReportEntity> Add(uint errandId,
+                                            ReportEntity reportEntity,
+                                            IEnumerable<FileEntity>? files)
     {
         Report report = mapper.Map<Report>(reportEntity);
         IEnumerable<UploadedFile> uFiles = mapper.Map<IEnumerable<UploadedFile>>(files);
+
         foreach (UploadedFile ufile in uFiles)
         {
             ufile.Path = FilesStorageHelper.FilePath(ufile.Name);
         }
+
+        Errand? errand = context.Errands
+            .Include(e => e.Report)
+            .FirstOrDefault(e => e.Id == errandId);
+
+        if (errand is null)
+            return new(false, ServiceResponceConstants.EntityNotFound);
+        else if (errand.Report is not null)
+        {
+            return new(false, ServiceResponceConstants.NothingChanged);
+        }
+
+        errand.State = TaskState.Closed;
         report.Files = uFiles.ToList();
         report.ErrandId = errandId;
         context.Reports.Add(report);
         context.SaveChanges();
-        fileStorage.SaveFiles(files.Select(f => (f.Content, f.Name)));
+        fileStorage.SaveFiles(files?.Select(f => (f.Content, f.Name)));
         return new(true);
     }
 

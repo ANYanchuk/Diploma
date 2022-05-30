@@ -14,8 +14,7 @@ namespace TaskManager.ViewModels
         public string? Title { get; set; }
         public string? Body { get; set; }
         public string Type { get; set; }
-        public Priority Priority { get; set; }
-        public DateTime Started { get; private set; }
+        public string State { get; set; }
         public DateTime? Deadline { get; set; }
     }
 }

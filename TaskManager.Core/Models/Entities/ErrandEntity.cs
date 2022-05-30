@@ -17,10 +17,11 @@ public class ErrandEntity
     public ReportFormatEntity ReportFormat { get; set; }
     public string Type { get; set; }
     public UserEntity? Leader { get; set; }
+
     public List<UserEntity> Users { get; set; }
     public DateTime Started { get; set; }
     public DateTime? Deadline { get; set; }
-    public TaskState State { get; set; }
+    public string State { get; set; }
     public ReportEntity? Report { get; set; }
     public string? ReviewComment { get; set; }
 }

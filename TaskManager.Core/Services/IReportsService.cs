@@ -8,6 +8,6 @@ public interface IReportsService
     public ServiceResponse<ReportEntity> Add(
         uint errandId,
         ReportEntity report,
-        IEnumerable<FileEntity> files);
+        IEnumerable<FileEntity>? files);
     public ServiceResponse<ReportEntity> Delete(uint errandId);
 }

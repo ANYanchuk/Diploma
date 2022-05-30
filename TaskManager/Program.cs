@@ -1,10 +1,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-using TaskManager.Middlewares;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
+using System.Text.Json.Serialization;
+using System.Text;
+using TaskManager.Middlewares;
 
 using TaskManager.Mapper;
 
@@ -24,6 +26,7 @@ builder.Services.AddAutoMapper(typeof(EntityProfile), typeof(ViewModelProfile));
 
 builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 builder.Services.AddTransient<ITasksService, TasksService>();
+builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<IReportsService, ReportsService>();
 builder.Services.AddTransient<IRolesService, RolesService>();
 builder.Services.AddTransient<IAuthServise, AuthServise>();
@@ -48,12 +51,8 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddControllersWithViews()
-    .AddNewtonsoftJson(options =>
-    {
-        // options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
-        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-    });
+builder.Services.AddControllers().AddNewtonsoftJson(options
+    => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services.AddRazorPages();
 

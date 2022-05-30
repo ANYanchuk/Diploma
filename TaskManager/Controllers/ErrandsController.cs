@@ -10,19 +10,19 @@ using TaskManager.Core.Models;
 namespace TaskManager.Controllers
 {
     [ApiController]
+    [Authorize(Roles = "Завідувач")]
     [Route("api/[controller]")]
-    public class TasksController : ControllerBase
+    public class ErrandsController : ControllerBase
     {
         private readonly ITasksService tasksService;
         private readonly IMapper mapper;
 
-        public TasksController(ITasksService taskService, IMapper mapper)
+        public ErrandsController(ITasksService taskService, IMapper mapper)
         {
             this.tasksService = taskService;
             this.mapper = mapper;
         }
 
-        [Authorize(Roles = "Завідувач")]
         [HttpGet]
         public ActionResult Get()
         {
@@ -33,7 +33,6 @@ namespace TaskManager.Controllers
                 return BadRequest(taskResponse.ErrorMessage);
         }
 
-        [Authorize(Roles = "Завідувач")]
         [HttpPost]
         public IActionResult Post(PostErrandViewModel errandViewModel)
         {
@@ -45,7 +44,6 @@ namespace TaskManager.Controllers
                 return BadRequest(response.ErrorMessage);
         }
 
-        [Authorize(Roles = "Завідувач")]
         [HttpPut("{id}")]
         public IActionResult Put(PostErrandViewModel errandViewModel, [FromRoute] uint id)
         {
@@ -57,13 +55,12 @@ namespace TaskManager.Controllers
                 return BadRequest(response.ErrorMessage);
         }
 
-        [Authorize(Roles = "Завідувач")]
         [HttpDelete("{id}")]
         public IActionResult Delete([FromRoute] uint id)
         {
             ServiceResponse<string> response = tasksService.Delete(id);
             if (response.IsSuccessfull)
-                return Ok(null);
+                return NoContent();
             else
                 return BadRequest(response.ErrorMessage);
         }
