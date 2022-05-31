@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Serialization;
-using System.Text.Json.Serialization;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using TaskManager.Middlewares;
 
@@ -53,6 +52,60 @@ builder.Services.AddAuthentication(x =>
 
 builder.Services.AddControllers().AddNewtonsoftJson(options
     => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "ToDo API",
+        Description = "A simple example ASP.NET Core Web API",
+        TermsOfService = new Uri("https://example.com/terms"),
+        Contact = new OpenApiContact
+        {
+            Name = "Nicky Liu",
+            Email = "nicky@zedotech.com",
+            Url = new Uri("https://www.zedotech.com"),
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Use under LICX",
+            Url = new Uri("https://example.com/license"),
+        }
+    });
+
+    options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+    options.IgnoreObsoleteActions();
+    options.IgnoreObsoleteProperties();
+
+    OpenApiSecurityScheme securityDefinition = new OpenApiSecurityScheme()
+    {
+        Name = "Bearer",
+        BearerFormat = "JWT",
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+        Description = "Specify the authorization token.",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+    };
+
+    OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[]{}
+        }
+    };
+
+    options.AddSecurityDefinition("Bearer", securityDefinition);
+    options.AddSecurityRequirement(securityRequirements);
+
+});
 
 builder.Services.AddRazorPages();
 
@@ -73,6 +126,12 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 // app.UseMiddleware<TokenMiddleware>();
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+});
 
 app.MapControllerRoute(
     name: "default",
