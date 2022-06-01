@@ -7,12 +7,11 @@ namespace TaskManager.Data.Services;
 
 public class FileStorageService : IFileStorageService
 {
-    public ServiceResponse<string> SaveFiles(IEnumerable<(byte[] content, string fileName)> files)
+    public ServiceResponse<string> SaveFiles(IEnumerable<(byte[] content, string path)>? files)
     {
         foreach (var file in files.OrEmptyIfNull())
         {
-            string filePath = Path.Combine(FilesStorageHelper.StoragePath, Guid.NewGuid().ToString() + Path.GetExtension(file.fileName));
-            using (var stream = System.IO.File.Create(filePath))
+            using (var stream = System.IO.File.Create(file.path))
             {
                 stream.Write(file.content, 0, file.content.Length);
             }

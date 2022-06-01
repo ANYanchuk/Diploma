@@ -1,8 +1,4 @@
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
@@ -10,12 +6,12 @@ using TaskManager.ViewModels;
 using TaskManager.Core.Services;
 using TaskManager.Core.Models.Entities;
 using TaskManager.Core.Models;
-using TaskManager.Data.Helpers;
 
 namespace TaskManager.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private const string UserIdURL = "{userId}";
@@ -37,19 +33,37 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        public IActionResult Get(uint userId)
+        public IActionResult Get()
         {
             ServiceResponse<IEnumerable<UserEntity>> userResponse = usersService.GetAll();
+            if (userResponse.IsSuccessfull)
+                return Ok(mapper.Map<IEnumerable<UserViewModel>>(userResponse.Data));
+            else
+                return BadRequest(userResponse.ErrorMessage);
+        }
 
+        [HttpGet(UserIdURL)]
+        public IActionResult GetById(uint userId)
+        {
+            ServiceResponse<UserEntity> userResponse = usersService.GetById(userId);
             if (userResponse.IsSuccessfull)
                 return Ok(mapper.Map<UserViewModel>(userResponse.Data));
             else
                 return BadRequest(userResponse.ErrorMessage);
         }
 
+        [HttpPut(UserIdURL)]
+        public IActionResult Put(uint userId, [FromBody] UserViewModel userViewModel)
+        {
+            UserEntity user = mapper.Map<UserEntity>(userViewModel);
+            ServiceResponse<UserEntity> userResponse = usersService.Edit(user, userId);
+            if (userResponse.IsSuccessfull)
+                return Ok();
+            else
+                return BadRequest(userResponse.ErrorMessage);
+        }
+
         [HttpGet(UserIdURL + "/errands")]
-        [Authorize]
         public IActionResult GetErrands(uint userId)
         {
             ServiceResponse<IEnumerable<ErrandEntity>> taskResponse =
@@ -61,10 +75,10 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet(UserIdURL + "/errands/{errandId}")]
-        public IActionResult Get(uint userId, uint errandId)
+        public IActionResult GetErrand(uint userId, uint errandId)
         {
             ServiceResponse<ErrandEntity> taskResponse = tasksService.GetById(errandId);
-            if (taskResponse.IsSuccessfull && taskResponse.Data.Users.Select(u => u.Id).Contains(userId))
+            if (taskResponse.IsSuccessfull && taskResponse.Data!.Users.Select(u => u.Id).Contains(userId))
                 return Ok(taskResponse.Data);
             else
                 return NotFound();
@@ -86,7 +100,7 @@ namespace TaskManager.Controllers
                 return BadRequest(response.ErrorMessage);
         }
 
-        [HttpDelete]
+        [HttpDelete("{userId}")]
         [Authorize(Roles = "Завідувач")]
         public ActionResult DeleteUser(uint userId)
         {

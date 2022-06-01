@@ -27,15 +27,18 @@ public class ReportsService : IReportsService
 
     public ServiceResponse<ReportEntity> Add(uint errandId,
                                             ReportEntity reportEntity,
-                                            IEnumerable<FileEntity>? files)
+                                            IEnumerable<FileEntity> files)
     {
-        Report report = mapper.Map<Report>(reportEntity);
-        IEnumerable<UploadedFile> uFiles = mapper.Map<IEnumerable<UploadedFile>>(files);
+        List<FileEntity> fileEntities = files.ToList();
 
-        foreach (UploadedFile ufile in uFiles)
+        foreach (FileEntity file in fileEntities.OrEmptyIfNull())
         {
-            ufile.Path = FilesStorageHelper.FilePath(ufile.Name);
+            file.Path = FilesStorageHelper.FilePath(file.Name);
         }
+
+        Report report = mapper.Map<Report>(reportEntity);
+
+        IEnumerable<UploadedFile> uFiles = mapper.Map<IEnumerable<UploadedFile>>(fileEntities);
 
         Errand? errand = context.Errands
             .Include(e => e.Report)
@@ -53,7 +56,7 @@ public class ReportsService : IReportsService
         report.ErrandId = errandId;
         context.Reports.Add(report);
         context.SaveChanges();
-        fileStorage.SaveFiles(files?.Select(f => (f.Content, f.Name)));
+        fileStorage.SaveFiles(fileEntities?.Select(f => (f.Content, f.Path)));
         return new(true);
     }
 

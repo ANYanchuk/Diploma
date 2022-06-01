@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Data.DbContexts;
+using TaskManager.Core.Models.Data;
 
 namespace TaskManager.Controllers
 {
@@ -17,14 +18,21 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetFile([FromRoute] int id)
+        public IActionResult GetFile([FromRoute] int id)
         {
-            var file = await context.Files.FindAsync(id);
+            UploadedFile? file = context.Files.FirstOrDefault(f => f.Id == id);
             if (file is null)
                 return NotFound();
 
-            FileStream fs = new FileStream(file.Path, FileMode.Open);
-            return File(fs, "multipart/form-data", file.Name);
+            try
+            {
+                FileStream fs = new FileStream(file.Path, FileMode.Open);
+                return File(fs, "multipart/form-data", file.Name);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }

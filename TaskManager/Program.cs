@@ -27,6 +27,7 @@ builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 builder.Services.AddTransient<ITasksService, TasksService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<IReportsService, ReportsService>();
+builder.Services.AddTransient<IReportFormatsService, ReportFormatsService>();
 builder.Services.AddTransient<IRolesService, RolesService>();
 builder.Services.AddTransient<IAuthServise, AuthServise>();
 

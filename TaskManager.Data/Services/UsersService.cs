@@ -25,6 +25,14 @@ public class UsersService : IUsersService
         return new(true, data: mapper.Map<IEnumerable<UserEntity>>(users));
     }
 
+    public ServiceResponse<UserEntity> GetById(uint id)
+    {
+        ApplicationUser? user = context.Users.FirstOrDefault(u => u.Id == id);
+        if (user is null)
+            return new(false, ServiceResponceConstants.EntityNotFound);
+        return new(true, data: mapper.Map<UserEntity>(user));
+    }
+
     public ServiceResponse<UserEntity> Edit(UserEntity userEntity, uint id)
     {
         userEntity.Id = id;

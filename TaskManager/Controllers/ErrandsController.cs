@@ -33,6 +33,16 @@ namespace TaskManager.Controllers
                 return BadRequest(taskResponse.ErrorMessage);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get(uint id)
+        {
+            ServiceResponse<ErrandEntity> taskResponse = tasksService.GetById(id);
+            if (taskResponse.IsSuccessfull)
+                return Ok(taskResponse.Data);
+            else
+                return NotFound();
+        }
+
         [HttpPost]
         public IActionResult Post(PostErrandViewModel errandViewModel)
         {

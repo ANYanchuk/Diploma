@@ -9,6 +9,8 @@ namespace TaskManager.Core.Mapper
     {
         public EntityProfile()
         {
+            CreateMap<ApplicationRole, string>().ConvertUsing((role, str) => role.Name);
+            CreateMap<ReportFormat, string>().ConvertUsing((format, str) => format.Name);;
             CreateMap<Errand, ErrandEntity>().ReverseMap();
             CreateMap<UserEntity, ApplicationUser>()
                 .ForMember(au => au.Role, opt => opt.Ignore())
