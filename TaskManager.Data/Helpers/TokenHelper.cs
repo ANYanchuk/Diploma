@@ -20,13 +20,13 @@ public static class TokenHelper
             audience: configuration["JWT:Audience"],
             new Claim[]
             {
-                    new Claim("Id", $"{user.Id}"),
-                    new Claim("FirstName", $"{user.FirstName}"),
-                    new Claim("LastName", $"{user.LastName}"),
-                    new Claim("MiddleName", $"{user.MiddleName}"),
-                    new Claim("PhoneNumber", $"{user.PhoneNumber}"),
-                    new Claim("Role", user.RoleName),
-                    new Claim("Email", user.Email),
+                    new Claim("id", $"{user.Id}"),
+                    new Claim("firstName", $"{user.FirstName}"),
+                    new Claim("lastName", $"{user.LastName}"),
+                    new Claim("middleName", $"{user.MiddleName}"),
+                    new Claim("phoneNumber", $"{user.PhoneNumber}"),
+                    new Claim("role", user.RoleName),
+                    new Claim("email", user.Email),
                     new Claim(ClaimTypes.Role, user.RoleName)
             },
             expires: DateTime.UtcNow.AddHours(1),
