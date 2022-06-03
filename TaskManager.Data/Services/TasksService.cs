@@ -128,7 +128,7 @@ public class TasksService : ITasksService
         int result = context.SaveChanges();
 
         if (result != 0)
-            return new ServiceResponse<ErrandEntity>(true);
+            return new ServiceResponse<ErrandEntity>(true, null, errandEntity);
         else
             return new ServiceResponse<ErrandEntity>(false, ServiceResponceConstants.NothingChanged);
     }
