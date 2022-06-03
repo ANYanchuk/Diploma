@@ -60,7 +60,7 @@ namespace TaskManager.Controllers
             ErrandEntity task = mapper.Map<ErrandEntity>(errandViewModel);
             ServiceResponse<ErrandEntity> response = tasksService.Edit(task, id);
             if (response.IsSuccessfull)
-                return Ok(null);
+                return Ok(response.Data);
             else
                 return BadRequest(response.ErrorMessage);
         }
