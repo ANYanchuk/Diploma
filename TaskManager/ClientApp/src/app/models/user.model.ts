@@ -1,11 +1,12 @@
 export interface User {
-  Id: number;
-  FirstName: string;
-  LastName: string;
-  MiddleName: string;
-  PhoneNumber: string;
-  Email: string;
-  Role: UserRole;
+  id: number;
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  phoneNumber: string;
+  email: string;
+  role: UserRole;
+  errands: any[];
 }
 
 export enum UserRole {

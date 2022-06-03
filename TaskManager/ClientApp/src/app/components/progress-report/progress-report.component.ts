@@ -47,7 +47,7 @@ const progressReportEntries = [
 @Component({
   selector: 'app-progress-report',
   templateUrl: './progress-report.component.html',
-  styleUrls: ['./progress-report.component.css'],
+  styleUrls: ['./progress-report.component.scss'],
 })
 export class ProgressReportComponent implements OnInit {
   progressReportEntries = progressReportEntries;

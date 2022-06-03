@@ -8,10 +8,10 @@
       <div class="toolbar-spacer"></div>
       <div class="user-info">
         <span *ngIf="authenticatedUser" class="user-name">{{
-          authenticatedUser?.FirstName + ' ' + authenticatedUser?.LastName
+          authenticatedUser?.firstName + ' ' + authenticatedUser?.lastName
         }}</span>
         <span *ngIf="authenticatedUser" class="user-role">{{
-          authenticatedUser?.Role
+          authenticatedUser?.role
         }}</span>
       </div>
       <button mat-button *ngIf="authenticatedUser" (click)="logout()">

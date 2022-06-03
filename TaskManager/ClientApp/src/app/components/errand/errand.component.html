@@ -1,45 +1,45 @@
 <mat-expansion-panel class="errand-container">
-  <mat-expansion-panel-header>
-    <mat-panel-title class="title"> {{ options.name }} </mat-panel-title>
+  <mat-expansion-panel-header class="errand-header">
+    <mat-panel-title class="title"> {{ errand.title }} </mat-panel-title>
     <mat-panel-description class="info">
       <div class="dates">
-        <div>Видано: {{ options.dateFrom }}</div>
-        <div>Дедлайн: {{ options.dateTo }}</div>
+        <div>Видано: {{ errand.started }}</div>
+        <div>Дедлайн: {{ errand.deadline }}</div>
       </div>
-      <div>Тип: {{ options.type }}</div>
-      <div>Статус: {{ options.status }}</div>
+      <div>Тип: {{ errand.type }}</div>
+      <div>Статус: {{ errand.state }}</div>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="description">
     <h5>Опис</h5>
     <p>
-      {{ options.description }}
+      {{ errand.body }}
     </p>
   </div>
-  <div *ngIf="role === UserRole.LEAD" class="executors">
+  <div *ngIf="authUserData.role === UserRole.LEAD" class="executors">
     <h5>Виконавці</h5>
     <ol>
-      <li *ngFor="let executor of options.executors">
+      <li *ngFor="let executor of errand.users">
         {{ executor.firstName + ' ' + executor.lastName }}
       </li>
     </ol>
   </div>
-  <div *ngIf="role === UserRole.LEAD" class="report">
-    <ng-container *ngIf="options.report; else notUploaded">
-      <h5>Звіт</h5>
-      <p>
-        {{ options.report.text }}
-      </p>
-      <div class="uploaded-file">
-        <mat-icon>article</mat-icon>
-        {{ options.report.file }}
-      </div>
+  <div *ngIf="authUserData.role === UserRole.LEAD" class="report">
+    <ng-container *ngIf="errand.report; else notUploaded">
+      <!--      <h5>Звіт</h5>-->
+      <!--      <p>-->
+      <!--        {{ options.report.text }}-->
+      <!--      </p>-->
+      <!--      <div class="uploaded-file">-->
+      <!--        <mat-icon>article</mat-icon>-->
+      <!--        {{ options.report.file }}-->
+      <!--      </div>-->
     </ng-container>
     <ng-template #notUploaded>
       <h5>Звіт не завантажений</h5>
     </ng-template>
     <div class="btns">
-      <button mat-button *ngIf="options.report">Перевірити</button>
+      <button mat-button *ngIf="errand.report">Перевірити</button>
       <button mat-button>Видалити</button>
       <button mat-button (click)="openErrandForm()">Редагувати</button>
     </div>

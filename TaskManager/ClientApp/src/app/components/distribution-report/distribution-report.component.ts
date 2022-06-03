@@ -10,7 +10,7 @@ const users = [
 @Component({
   selector: 'app-distribution-report',
   templateUrl: './distribution-report.component.html',
-  styleUrls: ['./distribution-report.component.css'],
+  styleUrls: ['./distribution-report.component.scss'],
 })
 export class DistributionReportComponent implements OnInit {
   users = users;

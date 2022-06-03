@@ -6,7 +6,8 @@
     </div>
   </div>
   <div class="errands-list">
-    <app-errand [options]="errands[0]"></app-errand>
-    <app-errand [options]="errands[1]"></app-errand>
+    <ng-container *ngIf="errands$ | async as errands">
+      <app-errand *ngFor="let errand of errands" [errand]="errand"></app-errand>
+    </ng-container>
   </div>
 </mat-card>
