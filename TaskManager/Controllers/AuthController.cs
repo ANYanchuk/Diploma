@@ -42,5 +42,19 @@ namespace TaskManager.Controllers
             else
                 return BadRequest(response.ErrorMessage);
         }
+
+        [HttpPost("change-password")]
+        public IActionResult ChangePassword(ChangePasswordViewModel passwordViewModel)
+        {
+            ServiceResponse<string> response = authService
+                .ChangePassword(passwordViewModel.Email,
+                                passwordViewModel.OldPassword,
+                                passwordViewModel.NewPassword);
+            if (response.IsSuccessfull)
+                return Ok(response.Data);
+            else
+                return BadRequest(response.ErrorMessage);
+        }
+
     }
 }

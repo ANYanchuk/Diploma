@@ -7,5 +7,6 @@ namespace TaskManager.Core.Services
     {
         public ServiceResponse<string> Login(string email, string password);
         public ServiceResponse<string> Register(UserEntity user, string password);
+        public ServiceResponse<string> ChangePassword(string email,string oldPassword, string newPassword);
     }
 }
