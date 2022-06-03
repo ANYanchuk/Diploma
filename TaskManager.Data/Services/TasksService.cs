@@ -123,6 +123,8 @@ public class TasksService : ITasksService
         foreach (var user in users)
             errand.Users.Add(user);
 
+        errand.State = TaskState.Opened;
+
         int result = context.SaveChanges();
 
         if (result != 0)
