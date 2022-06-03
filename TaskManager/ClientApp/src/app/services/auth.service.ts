@@ -11,23 +11,32 @@ export enum LoginResult {
   ERROR = 'ERROR',
 }
 
+export interface AuthUserData extends User {
+  token: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly _url = `/api/auth`;
-  private readonly _authUserSubject = new BehaviorSubject<User | null>(null);
+  private readonly _authUserDataSubject =
+    new BehaviorSubject<AuthUserData | null>(null);
 
   get user$() {
-    return this._authUserSubject.asObservable();
+    return this._authUserDataSubject.asObservable();
   }
 
   get user() {
-    return this._authUserSubject.value;
+    return this._authUserDataSubject.value;
+  }
+
+  get token() {
+    return this._authUserDataSubject.value?.token || null;
   }
 
   get role() {
-    return this._authUserSubject.value?.Role || null;
+    return this._authUserDataSubject.value?.role || null;
   }
 
   constructor(
@@ -66,14 +75,17 @@ export class AuthService {
   }
 
   logout() {
-    this._authUserSubject.next(null);
+    this._authUserDataSubject.next(null);
     localStorage.removeItem('token');
     this._router.navigateByUrl('/login');
   }
 
   private decodeAndPropagate(token: string): void {
-    const user = jwtDecode<User>(token);
-    this._authUserSubject.next(user);
+    const data: AuthUserData = {
+      ...jwtDecode<User>(token),
+      token,
+    };
+    this._authUserDataSubject.next(data);
     localStorage.setItem('token', token);
   }
 }

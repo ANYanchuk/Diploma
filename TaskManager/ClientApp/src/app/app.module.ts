@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -36,6 +36,7 @@ import { ProgressReportEntryComponent } from './components/progress-report-entry
 import { TrueDistributionReportComponent } from './components/true-distribution-report/true-distribution-report.component';
 import { ErrandFormComponent } from './components/errand-form/errand-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 const routes: Routes = [
   { path: '', redirectTo: 'errands', pathMatch: 'full' },
@@ -104,7 +105,13 @@ const routes: Routes = [
     MatTableModule,
     MatDialogModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,28 +1,35 @@
-<h2 mat-dialog-title>{{ mode === 'create' ? 'Створити доручення' : 'Редагувати доручення' }}</h2>
-<mat-dialog-content class="errand-form-container">
+<h2 mat-dialog-title>
+  {{ mode === 'create' ? 'Створити доручення' : 'Редагувати доручення' }}
+</h2>
+<mat-dialog-content [formGroup]="errandForm" class="errand-form-container">
   <div class="input-group">
     <mat-form-field appearance="outline">
       <mat-label>Назва доручення</mat-label>
-      <input matInput />
+      <input formControlName="title" matInput />
     </mat-form-field>
   </div>
   <div class="input-group">
     <mat-form-field appearance="outline">
       <mat-label>Опис доручення</mat-label>
-      <textarea rows="3" cdkTextareaAutosize matInput> </textarea>
+      <textarea formControlName="body" rows="3" cdkTextareaAutosize matInput>
+      </textarea>
     </mat-form-field>
   </div>
   <div class="input-group">
     <mat-form-field appearance="outline">
       <mat-label>Тип</mat-label>
-      <mat-select>
-        <mat-option value="Індивідуальне">Індивідуальне</mat-option>
-        <mat-option value="Групове">Групове</mat-option>
+      <mat-select formControlName="type">
+        <mat-option [value]="ErrandType.INDIVIDUAL">{{
+          ErrandType.INDIVIDUAL
+        }}</mat-option>
+        <mat-option [value]="ErrandType.COLLECTIVE">{{
+          ErrandType.COLLECTIVE
+        }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Дедлайн</mat-label>
-      <input matInput [matDatepicker]="picker" />
+      <input formControlName="deadline" matInput [matDatepicker]="picker" />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -30,22 +37,28 @@
   <div class="input-group">
     <mat-form-field appearance="outline">
       <mat-label>Виконавці</mat-label>
-      <mat-select multiple>
-        <mat-option value="Влад Григорович">Влад Григорович</mat-option>
-        <mat-option value="Андрій Янчук">Андрій Янчук</mat-option>
+      <mat-select formControlName="userIds" multiple>
+        <mat-option *ngFor="let user of users$ | async" [value]="user.id">
+          {{ user.email }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Форма звітності</mat-label>
-      <mat-select>
-        <mat-option value="Файл">Файл</mat-option>
-        <mat-option value="Імейл">Імейл</mat-option>
-        <mat-option value="Дзвінок">Дзвінок</mat-option>
+      <mat-select formControlName="reportFormat">
+        <mat-option [value]="ReportFormat.FILE">{{
+          ReportFormat.FILE
+        }}</mat-option>
+        <mat-option [value]="ReportFormat.TEXT">{{
+          ReportFormat.TEXT
+        }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Відміна</button>
-  <button mat-button>{{ this.mode === 'create' ? 'Створити' : 'Редагувати' }}</button>
+  <button mat-flat-button mat-dialog-close>Відміна</button>
+  <button mat-flat-button color="primary" (click)="submit()">
+    {{ this.mode === 'create' ? 'Створити' : 'Редагувати' }}
+  </button>
 </mat-dialog-actions>
