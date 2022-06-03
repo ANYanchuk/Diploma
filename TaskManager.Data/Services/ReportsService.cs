@@ -47,9 +47,7 @@ public class ReportsService : IReportsService
         if (errand is null)
             return new(false, ServiceResponceConstants.EntityNotFound);
         else if (errand.Report is not null)
-        {
             return new(false, ServiceResponceConstants.NothingChanged);
-        }
 
         errand.State = TaskState.Closed;
         report.Files = uFiles.ToList();
