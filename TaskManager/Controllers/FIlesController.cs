@@ -14,10 +14,12 @@ namespace TaskManager.Controllers
     public class FilesController : ControllerBase
     {
         private readonly IFileService fileService;
-        private IMapper mapper;
+        private readonly IUsersService userService;
+        private readonly IMapper mapper;
         public const string BasePrefix = "api/files/";
-        public FilesController(IFileService fileService, IMapper mapper)
+        public FilesController(IFileService fileService, IMapper mapper, IUsersService userService)
         {
+            this.userService = userService;
             this.fileService = fileService;
             this.mapper = mapper;
         }
@@ -38,7 +40,18 @@ namespace TaskManager.Controllers
         public IActionResult ErrandVedomost([FromQuery] DateTime since, [FromQuery] DateTime till)
         {
             Stream file = fileService.GetErrandsDoc(since, till);
-            return File(file, "application/msword", "Sample.docx");
+            return File(file,
+                "application/msword",
+                $"Відомість виконаних доручень з {since.ToShortDateString()} по {till.ToShortDateString()}.docx");
+        }
+
+        [HttpGet("distribution-info")]
+        public IActionResult DistributionVedomost([FromQuery] DateTime since, [FromQuery] DateTime till)
+        {
+            Stream file = fileService.GetDistributionDoc(since, till);
+            return File(file,
+                "application/msword",
+                $"Відомість виданих доручень з {since.ToShortDateString()} по {till.ToShortDateString()}.docx");
         }
 
         [HttpGet("user-info")]
@@ -47,7 +60,13 @@ namespace TaskManager.Controllers
             Stream? file = fileService.GetUsersDoc(since, till, userId);
             if (file is null)
                 return NotFound();
-            return File(file, "application/msword", "Sample.docx");
+
+            UserEntity user = userService.GetById(userId).Data!;
+            string userName = user.FirstName + " " + user.LastName;
+
+            return File(file,
+                "application/msword",
+                $"Відомість для {userName} з {since.ToShortDateString()} по {till.ToShortDateString()}.docx");
         }
     }
 }
