@@ -10,7 +10,7 @@ const users = [
 @Component({
   selector: 'app-true-distribution-report',
   templateUrl: './true-distribution-report.component.html',
-  styleUrls: ['./true-distribution-report.component.css'],
+  styleUrls: ['./true-distribution-report.component.scss'],
 })
 export class TrueDistributionReportComponent implements OnInit {
   users = users;

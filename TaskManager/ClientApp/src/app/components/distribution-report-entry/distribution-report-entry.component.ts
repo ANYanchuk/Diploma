@@ -4,7 +4,7 @@ import { errands } from '../../mock-data/errands';
 @Component({
   selector: 'app-distribution-report-entry',
   templateUrl: './distribution-report-entry.component.html',
-  styleUrls: ['./distribution-report-entry.component.css'],
+  styleUrls: ['./distribution-report-entry.component.scss'],
 })
 export class DistributionReportEntryComponent implements OnInit {
   @Input() user: any;

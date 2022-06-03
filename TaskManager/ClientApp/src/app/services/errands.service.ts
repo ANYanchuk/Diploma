@@ -12,6 +12,10 @@ export class ErrandsService {
 
   constructor(private readonly _http: HttpClient) {}
 
+  getAll(): Observable<Errand[]> {
+    return this._http.get<Errand[]>(this._url);
+  }
+
   create(dto: CreateErrandDto): Observable<Errand> {
     return this._http.post<Errand>(this._url, dto);
   }

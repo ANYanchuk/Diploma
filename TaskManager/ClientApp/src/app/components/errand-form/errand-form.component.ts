@@ -11,7 +11,7 @@ import { User } from '../../models/user.model';
 @Component({
   selector: 'app-errand-form',
   templateUrl: './errand-form.component.html',
-  styleUrls: ['./errand-form.component.css'],
+  styleUrls: ['./errand-form.component.scss'],
 })
 export class ErrandFormComponent implements OnInit {
   readonly ErrandType = ErrandType;

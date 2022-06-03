@@ -6,7 +6,9 @@
     </div>
   </div>
   <div class="errands-list">
-    <app-errand [options]="errands[0]"></app-errand>
-    <app-errand [options]="errands[1]"></app-errand>
+    <app-errand
+      *ngFor="let errand of errands$ | async"
+      [errand]="errand"
+    ></app-errand>
   </div>
 </mat-card>
