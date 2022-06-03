@@ -9,12 +9,11 @@ namespace TaskManager.ViewModels
 {
     public class PostErrandViewModel
     {
-        public uint LeaderId { get; set; }
         public List<UserIdViewModel> Users { get; set; }
         public string? Title { get; set; }
         public string? Body { get; set; }
         public string Type { get; set; }
-        public string State { get; set; }
+        public string? ReportFormat { get; set; }
         public DateTime? Deadline { get; set; }
     }
 }
