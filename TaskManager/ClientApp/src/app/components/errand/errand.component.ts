@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {AuthService, AuthUserData} from '../../services/auth.service';
+import { AuthService, AuthUserData } from '../../services/auth.service';
 import { UserRole } from '../../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrandFormComponent } from '../errand-form/errand-form.component';
@@ -26,9 +26,14 @@ export class ErrandComponent implements OnInit {
   ngOnInit(): void {}
 
   openErrandForm() {
-    this._dialog.open(ErrandFormComponent, {
-      minWidth: 600,
-      data: this.errand.id,
-    });
+    this._dialog
+      .open(ErrandFormComponent, {
+        minWidth: 600,
+        data: this.errand,
+      })
+      .afterClosed()
+      .subscribe(errand => {
+        this.errand = errand;
+      });
   }
 }

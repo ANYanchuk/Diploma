@@ -1,6 +1,6 @@
 import { ErrandType, ReportFormat } from '../models/errand.model';
 
-export interface CreateErrandDto {
+export interface ErrandDto {
   users: { id: number }[];
   title: string;
   body: string;
