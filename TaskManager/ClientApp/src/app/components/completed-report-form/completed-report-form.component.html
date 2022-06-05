@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Відправити звіт: {{ errand.title }}</h2>
+<mat-dialog-content
+  [formGroup]="reportForm"
+  class="completed-report-form-container"
+>
+  <div class="input-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Коментарій</mat-label>
+      <textarea formControlName="comment" rows="3" cdkTextareaAutosize matInput>
+      </textarea>
+    </mat-form-field>
+  </div>
+  <div class="input-group">
+    <input type="file" (change)="onFileUpload($event)" />
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" (click)="submit()">
+    Завантажити
+  </button>
+</mat-dialog-actions>

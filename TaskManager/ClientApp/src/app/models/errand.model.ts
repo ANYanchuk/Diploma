@@ -1,4 +1,5 @@
 import { User } from './user.model';
+import { Report } from './report.model';
 
 export interface Errand {
   id: number;
@@ -10,7 +11,7 @@ export interface Errand {
   started: Date;
   deadline: Date;
   state: ErrandState;
-  report: any | null;
+  report: Report | null;
   reviewComment: string | null;
 }
 

@@ -10,38 +10,60 @@
       <div>Статус: {{ errand.state }}</div>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <div class="description">
-    <h5>Опис</h5>
-    <p>
-      {{ errand.body }}
-    </p>
-  </div>
-  <div *ngIf="authUserData.role === UserRole.LEAD" class="executors">
-    <h5>Виконавці</h5>
-    <ol>
-      <li *ngFor="let executor of errand.users">
-        {{ executor.firstName + ' ' + executor.lastName }}
-      </li>
-    </ol>
-  </div>
-  <div *ngIf="authUserData.role === UserRole.LEAD" class="report">
-    <ng-container *ngIf="errand.report; else notUploaded">
-      <!--      <h5>Звіт</h5>-->
-      <!--      <p>-->
-      <!--        {{ options.report.text }}-->
-      <!--      </p>-->
-      <!--      <div class="uploaded-file">-->
-      <!--        <mat-icon>article</mat-icon>-->
-      <!--        {{ options.report.file }}-->
-      <!--      </div>-->
-    </ng-container>
-    <ng-template #notUploaded>
-      <h5>Звіт не завантажений</h5>
-    </ng-template>
-    <div class="btns">
-      <button mat-button *ngIf="errand.report">Перевірити</button>
-      <button mat-button>Видалити</button>
-      <button mat-button (click)="openErrandForm()">Редагувати</button>
+  <div class="errand-body">
+    <div class="description">
+      <h3>Опис</h3>
+      <p>
+        {{ errand.body }}
+      </p>
     </div>
+    <div class="executors">
+      <h3>Виконавці</h3>
+      <ol>
+        <li *ngFor="let executor of errand.users">
+          {{ executor.firstName + ' ' + executor.lastName }}
+        </li>
+      </ol>
+    </div>
+    <div class="report">
+      <ng-container *ngIf="errand.report; else notUploaded">
+        <h3>Звіт</h3>
+        <p>
+          {{ errand.report.comment }}
+        </p>
+        <div class="uploaded-file">
+          <mat-icon>article</mat-icon>
+          {{ errand.report.files[0].name }}
+        </div>
+      </ng-container>
+      <ng-template #notUploaded>
+        <h3>Звіт не завантажений</h3>
+      </ng-template>
+    </div>
+  </div>
+  <div class="errand-actions">
+    <ng-container *ngIf="authUserData?.role === UserRole.LEAD">
+      <button mat-button *ngIf="errand.report">Перевірити звіт</button>
+      <button mat-button>Видалити</button>
+      <button mat-button (click)="openEditForm()">Редагувати</button>
+    </ng-container>
+    <ng-container *ngIf="authUserData?.role === UserRole.LECTURER">
+      <button
+        mat-flat-button
+        color="warn"
+        [disabled]="!errand.report"
+        (click)="deleteReport()"
+      >
+        Видалити звіт
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="!!errand.report"
+        (click)="openReportForm()"
+      >
+        Відправити звіт
+      </button>
+    </ng-container>
   </div>
 </mat-expansion-panel>

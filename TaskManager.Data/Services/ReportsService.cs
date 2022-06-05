@@ -55,7 +55,7 @@ public class ReportsService : IReportsService
         context.Reports.Add(report);
         context.SaveChanges();
         fileStorage.SaveFiles(fileEntities?.Select(f => (f.Content, f.Path)));
-        return new(true);
+        return new(true, null, mapper.Map<ReportEntity>(report));
     }
 
     public ServiceResponse<ReportEntity> Delete(uint errandId)

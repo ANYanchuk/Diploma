@@ -84,8 +84,8 @@ namespace TaskManager.Controllers
                 return NotFound();
         }
 
-        [HttpPost(UserIdURL + "/errands/{errandId}/report")]
-        public IActionResult AddReport(uint userId, uint errandId, [FromForm] ReportViewModel reportViewModel)
+        [HttpPost("errands/{errandId}/report")]
+        public IActionResult AddReport(uint errandId, [FromForm] ReportViewModel reportViewModel)
         {
             ReportEntity report = mapper.Map<ReportEntity>(reportViewModel);
             IEnumerable<byte[]> files = mapper.Map<IEnumerable<byte[]>>(reportViewModel.Files);
@@ -95,7 +95,7 @@ namespace TaskManager.Controllers
 
             ServiceResponse<ReportEntity> response = reportsService.Add(errandId, report, fileEntities);
             if (response.IsSuccessfull)
-                return Created($"users/{userId}/errands/{errandId}/report", response.Data);
+                return Created($"users/errands/{errandId}/report", response.Data);
             else
                 return BadRequest(response.ErrorMessage);
         }
@@ -111,8 +111,8 @@ namespace TaskManager.Controllers
                 return BadRequest(userResponse.ErrorMessage);
         }
 
-        [HttpDelete(UserIdURL + "/errands/{errandId}/report")]
-        public IActionResult DeleteReport(uint userId, uint errandId)
+        [HttpDelete( "errands/{errandId}/report")]
+        public IActionResult DeleteReport(uint errandId)
         {
             ServiceResponse<ReportEntity> response = reportsService.Delete(errandId);
             if (response.IsSuccessfull)
