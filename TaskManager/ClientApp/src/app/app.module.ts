@@ -42,6 +42,7 @@ import { RolesComponent } from './components/roles/roles.component';
 import { RoleFormComponent } from './components/role-form/role-form.component';
 import { ReportFormatsComponent } from './components/report-formats/report-formats.component';
 import { ReportFormatFormComponent } from './components/report-format-form/report-format-form.component';
+import { DatePipe } from '@angular/common';
 
 const routes: Routes = [
   { path: '', redirectTo: 'errands', pathMatch: 'full' },
@@ -131,6 +132,7 @@ const routes: Routes = [
       useClass: AuthInterceptor,
       multi: true,
     },
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

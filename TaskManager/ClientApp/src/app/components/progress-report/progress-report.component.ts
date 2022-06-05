@@ -1,48 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRole } from '../../models/user.model';
-
-const progressReportEntries = [
-  {
-    name: 'Зробити дипломний проєкт',
-    dateFrom: '23-05-2022',
-    dateTo: '25-05-2022',
-    type: 'Коллективне',
-    reports: [
-      {
-        createdDate: '23-05-2022',
-        type: 'Файловий',
-        text: 'Текст звіту',
-        file: 'Звіт.docx',
-        user: { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD },
-        status: 'Виконано',
-      },
-      {
-        createdDate: '25-05-2022',
-        type: 'Файловий',
-        text: 'Текст звіту',
-        file: 'Звіт.docx',
-        user: { id: 1, firstName: 'Владислав', lastName: 'Григорович', role: UserRole.LEAD },
-        status: 'Перевіряється',
-      },
-    ],
-  },
-  {
-    name: 'Перевірити дипломний проєкт',
-    dateFrom: '25-05-2022',
-    dateTo: '25-05-2022',
-    type: 'Коллективне',
-    reports: [
-      {
-        user: { id: 1, firstName: 'Ірина', lastName: 'Ушакова', role: UserRole.LEAD },
-        status: 'Виконується',
-      },
-      {
-        user: { id: 1, firstName: 'Людмила', lastName: 'Знахур', role: UserRole.LEAD },
-        status: 'Виконується',
-      },
-    ],
-  },
-];
+import { ErrandsService } from '../../services/errands.service';
+import { Observable } from 'rxjs';
+import { Errand } from '../../models/errand.model';
+import { FormBuilder } from '@angular/forms';
+import { FilesService } from '../../services/files.service';
 
 @Component({
   selector: 'app-progress-report',
@@ -50,9 +12,24 @@ const progressReportEntries = [
   styleUrls: ['./progress-report.component.scss'],
 })
 export class ProgressReportComponent implements OnInit {
-  progressReportEntries = progressReportEntries;
+  readonly reportEntries$: Observable<Errand[]>;
+  readonly form = this._fb.group({
+    since: this._fb.control(null),
+    till: this._fb.control(null),
+  });
 
-  constructor() {}
+  constructor(
+    private readonly _errandsService: ErrandsService,
+    private readonly _fb: FormBuilder,
+    private readonly _filesService: FilesService,
+  ) {
+    this.reportEntries$ = this._errandsService.getInfo();
+  }
 
   ngOnInit(): void {}
+
+  export() {
+    const formValue = this.form.value;
+    this._filesService.exportErrandsInfo(formValue.since, formValue.till);
+  }
 }

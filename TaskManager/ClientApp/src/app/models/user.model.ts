@@ -1,3 +1,5 @@
+import { Errand } from './errand.model';
+
 export interface User {
   id: number;
   firstName: string;
@@ -6,7 +8,7 @@ export interface User {
   phoneNumber: string;
   email: string;
   role: UserRole;
-  errands: any[];
+  errands: Errand[] | null;
 }
 
 export enum UserRole {

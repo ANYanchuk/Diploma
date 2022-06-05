@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { User } from '../models/user.model';
 import { Errand } from '../models/errand.model';
 import { AuthService } from './auth.service';
-import {Report} from "../models/report.model";
+import { Report } from '../models/report.model';
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +45,9 @@ export class UsersService {
 
   deleteReport(errandId: number): Observable<void> {
     return this._http.delete<void>(`${this._url}/errands/${errandId}/report`);
+  }
+
+  getErrandsInfo(): Observable<User[]> {
+    return this._http.get<User[]>(`${this._url}/info`);
   }
 }

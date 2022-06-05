@@ -1,7 +1,26 @@
 <mat-card class="progress-report-container">
-  <button mat-raised-button style="margin-bottom: 10px">Експорт</button>
+  <div [formGroup]="form" class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Дата з</mat-label>
+      <input formControlName="since" matInput [matDatepicker]="pickerFrom" />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerFrom"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Дата по</mat-label>
+      <input formControlName="till" matInput [matDatepicker]="pickerTo" />
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <button class="export-btn" mat-flat-button color="primary" (click)="export()">
+    Експорт
+  </button>
   <app-progress-report-entry
-    *ngFor="let entry of progressReportEntries"
+    *ngFor="let entry of reportEntries$ | async"
     [entry]="entry"
   ></app-progress-report-entry>
 </mat-card>
