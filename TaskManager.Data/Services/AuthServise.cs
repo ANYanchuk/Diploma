@@ -27,7 +27,7 @@ namespace TaskManager.Data.Services
 
         public ServiceResponse<string> Register(UserEntity user, string password)
         {
-            if(context.Users.Any(u => u.Email == user.Email))
+            if (context.Users.Any(u => u.Email == user.Email))
                 return new(false, message: AuthResponseConstants.EmailExists);
 
             string hashedPassword = PasswordHasher.HashPassword(password);
@@ -50,6 +50,25 @@ namespace TaskManager.Data.Services
 
             string token = GetToken(user, configuration);
 
+            return new(true, data: token);
+        }
+
+        public ServiceResponse<string> ChangePassword(string email, string oldPassword, string password)
+        {
+            ApplicationUser? user = context.Users.FirstOrDefault(u => u.Email == email);
+
+            if (user is null)
+                return new(false, message: ServiceResponceConstants.EntityNotFound);
+
+            if (!PasswordHasher.VerifyPassword(oldPassword, user.PasswordHash))
+                return new(false, message: AuthResponseConstants.IncorrectPassword);
+
+            string newPassword = PasswordHasher.HashPassword(password);
+
+            user.PasswordHash = newPassword;
+            context.SaveChanges();
+            ApplicationUser newUser = context.Users.First(u => u.Email == user.Email);
+            string token = GetToken(newUser, configuration);
             return new(true, data: token);
         }
     }
