@@ -15,7 +15,8 @@ namespace TaskManager.ViewModels
         public string? Body { get; set; }
         public string ReportFormatName { get; set; }
         public string Type { get; set; }
-        public DateTime Started { get; private set; }
+        public DateTime Started { get; set; }
+        public ReportViewModel? Report { get; set; }
         public DateTime? Deadline { get; set; }
     }
 }

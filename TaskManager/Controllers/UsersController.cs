@@ -124,7 +124,7 @@ namespace TaskManager.Controllers
         [Authorize(Roles = "Завідувач")]
         public IActionResult Info()
         {
-            ServiceResponse<IEnumerable<UserEntity>> response = usersService.GetWithJoin();
+            ServiceResponse<IEnumerable<UserEntity>> response = usersService.GetWithErrands();
             if (response.IsSuccessfull)
                 return Ok(mapper.Map<IEnumerable<UserViewModel>>(response.Data));
             else return BadRequest(response.ErrorMessage);

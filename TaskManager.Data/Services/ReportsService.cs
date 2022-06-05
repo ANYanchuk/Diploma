@@ -52,6 +52,7 @@ public class ReportsService : IReportsService
         errand.State = TaskState.Closed;
         report.Files = uFiles.ToList();
         report.ErrandId = errandId;
+        report.LastChanged = DateTime.Now;
         context.Reports.Add(report);
         context.SaveChanges();
         fileStorage.SaveFiles(fileEntities?.Select(f => (f.Content, f.Path)));

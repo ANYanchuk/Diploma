@@ -29,6 +29,8 @@ public class UsersService : IUsersService
     {
         IEnumerable<ApplicationUser> users = context.Users
             .Include(u => u.Errands)
+            .ThenInclude(e => e.Report)
+            .Include(u => u.Errands)
             .ThenInclude(e => e.ReportFormat);
         return new(true, data: mapper.Map<IEnumerable<UserEntity>>(users));
     }

@@ -27,7 +27,7 @@ namespace TaskManager.Data.Services
 
         public ServiceResponse<string> Register(UserEntity user, string password)
         {
-            if (context.Users.Any(u => u.Email == user.Email))
+            if (context.Users.Any(u => u.Email.ToLowerInvariant() == user.Email.ToLowerInvariant()))
                 return new(false, message: AuthResponseConstants.EmailExists);
 
             string hashedPassword = PasswordHasher.HashPassword(password);
@@ -35,14 +35,14 @@ namespace TaskManager.Data.Services
             appUser.PasswordHash = hashedPassword;
             context.Users.Add(appUser);
             context.SaveChanges();
-            ApplicationUser newUser = context.Users.First(u => u.Email == appUser.Email);
+            ApplicationUser newUser = context.Users.First(u => u.Email.ToLowerInvariant() == appUser.Email.ToLowerInvariant());
             string token = GetToken(newUser, configuration);
             return new(true, data: token);
         }
 
         public ServiceResponse<string> Login(string email, string password)
         {
-            ApplicationUser? user = context.Users.FirstOrDefault(u => u.Email == email);
+            ApplicationUser? user = context.Users.FirstOrDefault(u => u.Email.ToLowerInvariant() == email.ToLowerInvariant());
             if (user is null)
                 return new(false, message: AuthResponseConstants.EmailNotFound);
             if (!PasswordHasher.VerifyPassword(password, user.PasswordHash))
