@@ -16,10 +16,22 @@ namespace TaskManager.Core.Mapper
                 .ForMember(ee => ee.ReportFormat, opt => opt.Ignore())
                 .ForMember(ee => ee.ReportFormatName, opt => opt
                     .MapFrom(src => src.ReportFormat)).ReverseMap();
+
+            CreateMap<ErrandInfo, Errand>()
+                .ForMember(ee => ee.ReportFormat, opt => opt.Ignore())
+                .ForMember(ee => ee.ReportFormatName, opt => opt
+                    .MapFrom(src => src.ReportFormat)).ReverseMap();
+
             CreateMap<UserEntity, ApplicationUser>()
                 .ForMember(au => au.Role, opt => opt.Ignore())
                 .ForMember(au => au.RoleName, opt => opt
                     .MapFrom(src => src.Role)).ReverseMap();
+
+            CreateMap<UserInfo, ApplicationUser>()
+                .ForMember(au => au.Role, opt => opt.Ignore())
+                .ForMember(au => au.RoleName, opt => opt
+                    .MapFrom(src => src.Role)).ReverseMap();
+
             CreateMap<UploadedFile, FileEntity>().ReverseMap();
             CreateMap<Report, ReportEntity>().ReverseMap();
         }
