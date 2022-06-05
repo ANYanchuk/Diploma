@@ -3,11 +3,11 @@
     <mat-panel-title class="title"> {{ errand.title }} </mat-panel-title>
     <mat-panel-description class="info">
       <div class="dates">
-        <div>Видано: {{ errand.started }}</div>
-        <div>Дедлайн: {{ errand.deadline }}</div>
+        <div>Видано: {{ errand.started | date }}</div>
+        <div>Дедлайн: {{ errand.deadline | date }}</div>
       </div>
-      <div>Тип: {{ errand.type }}</div>
-      <div>Статус: {{ errand.state }}</div>
+      <div class="type">Тип: {{ errand.type }}</div>
+      <div class="status">Статус: {{ errand.state }}</div>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="errand-body">
@@ -43,9 +43,12 @@
   </div>
   <div class="errand-actions">
     <ng-container *ngIf="authUserData?.role === UserRole.LEAD">
-      <button mat-button *ngIf="errand.report">Перевірити звіт</button>
-      <button mat-button>Видалити</button>
-      <button mat-button (click)="openEditForm()">Редагувати</button>
+      <button mat-flat-button color="warn" (click)="delete()">
+        Видалити доручення
+      </button>
+      <button mat-flat-button color="primary" (click)="openEditForm()">
+        Редагувати
+      </button>
     </ng-container>
     <ng-container *ngIf="authUserData?.role === UserRole.LECTURER">
       <button
