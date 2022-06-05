@@ -1,27 +1,25 @@
-mat-panel-title {
-  width: 150px;
-}
+.errand-container {
+  .errand-header {
+    .title {
+      width: 150px;
+      align-items: center;
+    }
 
-.info {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
+    .info {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+  }
+  .errand-body {
+    padding: 0 30px 10px 30px;
+  }
 
-.title {
-  align-items: center;
-}
-
-.report {
-  display: flex;
-  flex-direction: column;
-}
-
-.btns {
-  margin-left: auto;
-}
-
-.uploaded-file {
-  display: flex;
-  align-items: center;
+  .errand-actions {
+    border-top: solid 1px rgba(0, 0, 0, 0.12);
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    gap: 10px;
+  }
 }

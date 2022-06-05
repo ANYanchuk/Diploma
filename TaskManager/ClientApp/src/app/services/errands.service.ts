@@ -6,6 +6,7 @@ import { Errand } from '../models/errand.model';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { UserRole } from '../models/user.model';
+import {ReportDto} from "../dto/report.dto";
 
 @Injectable({
   providedIn: 'root',

@@ -37,6 +37,7 @@ import { TrueDistributionReportComponent } from './components/true-distribution-
 import { ErrandFormComponent } from './components/errand-form/errand-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { CompletedReportFormComponent } from './components/completed-report-form/completed-report-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'errands', pathMatch: 'full' },
@@ -80,6 +81,7 @@ const routes: Routes = [
     ProgressReportEntryComponent,
     TrueDistributionReportComponent,
     ErrandFormComponent,
+    CompletedReportFormComponent,
   ],
   imports: [
     ReactiveFormsModule,

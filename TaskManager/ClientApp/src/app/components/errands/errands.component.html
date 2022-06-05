@@ -2,7 +2,13 @@
   <div class="navigation">
     <app-filters></app-filters>
     <div>
-      <button mat-button (click)="openErrandsForm()">Створити доручення</button>
+      <button
+        *ngIf="authUserData?.role === UserRole.LEAD"
+        mat-button
+        (click)="openErrandsForm()"
+      >
+        Створити доручення
+      </button>
     </div>
   </div>
   <div class="errands-list">
