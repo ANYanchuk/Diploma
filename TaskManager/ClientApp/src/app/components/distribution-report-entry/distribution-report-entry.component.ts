@@ -18,7 +18,7 @@ export class DistributionReportEntryComponent implements OnInit {
     'status',
     'report',
   ];
-  columnsDistr = ['name', 'description'];
+  columnsDistr = ['name', 'description', 'dateFrom', 'dateTo'];
 
   columns: any[] = [];
 

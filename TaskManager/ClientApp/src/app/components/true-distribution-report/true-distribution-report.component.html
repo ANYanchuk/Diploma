@@ -1,13 +1,32 @@
 <mat-card class="distribution-report-container">
-  <button mat-raised-button style="margin-bottom: 10px">Експорт</button>
+  <div [formGroup]="form" class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Дата з</mat-label>
+      <input formControlName="from" matInput [matDatepicker]="pickerFrom" />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerFrom"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Дата по</mat-label>
+      <input formControlName="to" matInput [matDatepicker]="pickerTo" />
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <button
+    mat-flat-button
+    style="margin-bottom: 10px"
+    color="primary"
+    (click)="export()"
+  >
+    Експорт
+  </button>
   <app-distribution-report-entry
-    [user]="users[0]"
-
-    [distr]="true"
-  ></app-distribution-report-entry>
-  <app-distribution-report-entry
-    [user]="users[1]"
-
+    *ngFor="let entry of errandsInfo$ | async"
+    [user]="entry"
     [distr]="true"
   ></app-distribution-report-entry>
 </mat-card>

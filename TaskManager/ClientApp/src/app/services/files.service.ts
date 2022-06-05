@@ -33,4 +33,15 @@ export class FilesService {
         saveAs(blob, 'Відомість виконання за виконавцями');
       });
   }
+
+  exportDistributionInfo(since: Date, till: Date): void {
+    const params = new HttpParams()
+      .set('since', this._datePipe.transform(since, 'MM.dd.yyy'))
+      .set('till', this._datePipe.transform(till, 'MM.dd.yyy'));
+    this._http
+      .get(`${this._url}/distribution-info`, { responseType: 'blob', params })
+      .subscribe(blob => {
+        saveAs(blob, 'Відомість розподілу доручень');
+      });
+  }
 }

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { errands } from '../../mock-data/errands';
-import { UserRole } from '../../models/user.model';
-
-const users = [
-  { id: 1, firstName: 'Андрій', lastName: 'Янчук', role: UserRole.LEAD },
-  { id: 1, firstName: 'Владислав', lastName: 'Григорович', role: UserRole.LECTURER },
-];
+import { Observable } from 'rxjs';
+import { UsersService } from '../../services/users.service';
+import { User } from '../../models/user.model';
+import { FormBuilder } from '@angular/forms';
+import { FilesService } from '../../services/files.service';
 
 @Component({
   selector: 'app-true-distribution-report',
@@ -13,9 +11,25 @@ const users = [
   styleUrls: ['./true-distribution-report.component.scss'],
 })
 export class TrueDistributionReportComponent implements OnInit {
-  users = users;
-  errands = errands;
-  constructor() {}
+  readonly errandsInfo$: Observable<User[]>;
+
+  readonly form = this._fb.group({
+    from: this._fb.control(null),
+    to: this._fb.control(null),
+  });
+
+  constructor(
+    private readonly _usersService: UsersService,
+    private readonly _fb: FormBuilder,
+    private readonly _filesService: FilesService,
+  ) {
+    this.errandsInfo$ = this._usersService.getErrandsInfo();
+  }
 
   ngOnInit(): void {}
+
+  export(): void {
+    const value = this.form.value;
+    this._filesService.exportDistributionInfo(value.from, value.to);
+  }
 }
