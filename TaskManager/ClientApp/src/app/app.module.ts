@@ -40,6 +40,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CompletedReportFormComponent } from './components/completed-report-form/completed-report-form.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { RoleFormComponent } from './components/role-form/role-form.component';
+import { ReportFormatsComponent } from './components/report-formats/report-formats.component';
+import { ReportFormatFormComponent } from './components/report-format-form/report-format-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'errands', pathMatch: 'full' },
@@ -68,6 +70,11 @@ const routes: Routes = [
     component: RolesComponent,
   },
   {
+    path: 'formats',
+    canActivate:[AuthGuard],
+    component: ReportFormatsComponent,
+  },
+  {
     path: 'distribution-report',
     canActivate: [AuthGuard],
     component: TrueDistributionReportComponent,
@@ -91,6 +98,8 @@ const routes: Routes = [
     CompletedReportFormComponent,
     RolesComponent,
     RoleFormComponent,
+    ReportFormatsComponent,
+    ReportFormatFormComponent,
   ],
   imports: [
     ReactiveFormsModule,
