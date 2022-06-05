@@ -143,4 +143,24 @@ public class TasksService : ITasksService
         context.SaveChanges();
         return new(true);
     }
+
+    public ServiceResponse<IEnumerable<ErrandEntity>> GetInfo()
+    {
+        IEnumerable<Errand> errands = context.Errands
+            .Include(e => e.Users)
+            .Include(e => e.Report)
+            .Include(e => e.ReportFormat).ToList().DistinctBy(e => e.Started);
+
+        Dictionary<DateTime, Errand> dict = errands.ToDictionary(e => e.Started);
+
+        foreach (var e in context.Errands)
+        {
+            foreach (var u in e.Users)
+                dict[e.Started].Users.Add(u);
+        }
+
+        var a = dict.ToList().Select(d => d.Value);
+
+        return new(true, data: mapper.Map<IEnumerable<ErrandEntity>>(a));
+    }
 }

@@ -74,5 +74,15 @@ namespace TaskManager.Controllers
             else
                 return BadRequest(response.ErrorMessage);
         }
+
+        [HttpGet("info")]
+        public IActionResult Info()
+        {
+            ServiceResponse<IEnumerable<ErrandEntity>> response = tasksService.GetInfo();
+            if (response.IsSuccessfull)
+                return Ok(response.Data);
+            else
+                return BadRequest(response.ErrorMessage);
+        }
     }
 }
