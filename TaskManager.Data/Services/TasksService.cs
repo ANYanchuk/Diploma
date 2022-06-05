@@ -127,8 +127,12 @@ public class TasksService : ITasksService
 
         int result = context.SaveChanges();
 
+        errand = context.Errands
+            .Include(e => e.Users)
+            .FirstOrDefault(e => e.Id == id);
+
         if (result != 0)
-            return new ServiceResponse<ErrandEntity>(true, null, errandEntity);
+            return new ServiceResponse<ErrandEntity>(true, data: mapper.Map<ErrandEntity>(errand));
         else
             return new ServiceResponse<ErrandEntity>(false, ServiceResponceConstants.NothingChanged);
     }
