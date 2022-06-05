@@ -1,11 +1,40 @@
 <mat-card class="distribution-report-container">
-  <button mat-raised-button style="margin-bottom: 10px">Експорт</button>
+  <div [formGroup]="form" class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Виконавці</mat-label>
+      <mat-select formControlName="userId">
+        <mat-option *ngFor="let user of users$ | async" [value]="user.id">
+          {{ user.email }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Дата з</mat-label>
+      <input formControlName="from" matInput [matDatepicker]="pickerFrom" />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerFrom"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Дата по</mat-label>
+      <input formControlName="to" matInput [matDatepicker]="pickerTo" />
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <button
+    [disabled]="!userId"
+    class="export-btn"
+    mat-flat-button
+    color="primary"
+    (click)="export()"
+  >
+    Експорт
+  </button>
   <app-distribution-report-entry
-    [user]="users[0]"
-    [errands]="errands.slice(2)"
-  ></app-distribution-report-entry>
-  <app-distribution-report-entry
-    [user]="users[1]"
-    [errands]="errands.slice(0, 2)"
+    *ngFor="let user of errandsInfo$ | async"
+    [user]="user"
   ></app-distribution-report-entry>
 </mat-card>

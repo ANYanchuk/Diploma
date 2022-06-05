@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { errands } from '../../mock-data/errands';
 
 @Component({
   selector: 'app-distribution-report-entry',
@@ -8,11 +7,17 @@ import { errands } from '../../mock-data/errands';
 })
 export class DistributionReportEntryComponent implements OnInit {
   @Input() user: any;
-  @Input() errands = errands;
 
   @Input() distr = false;
 
-  columnsNonDistr = ['name', 'dateFrom', 'dateTo', 'dateCompleted', 'status', 'report'];
+  columnsNonDistr = [
+    'name',
+    'dateFrom',
+    'dateTo',
+    'dateCompleted',
+    'status',
+    'report',
+  ];
   columnsDistr = ['name', 'description'];
 
   columns: any[] = [];
