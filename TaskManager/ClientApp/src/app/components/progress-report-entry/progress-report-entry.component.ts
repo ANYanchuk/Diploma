@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Errand } from '../../models/errand.model';
 
 @Component({
   selector: 'app-progress-report-entry',
@@ -6,12 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./progress-report-entry.component.scss'],
 })
 export class ProgressReportEntryComponent implements OnInit {
-  @Input() entry: any;
+  @Input() entry: Errand;
   dataSource = [];
   columns = ['executorName', 'status', 'reportType', 'completedDate'];
   constructor() {}
 
   ngOnInit(): void {
-    this.dataSource = this.entry.reports || [];
+    this.dataSource = this.entry.users;
   }
 }

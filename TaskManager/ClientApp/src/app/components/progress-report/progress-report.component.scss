@@ -1,3 +1,14 @@
 .progress-report-container {
+  .filters {
+    display: flex;
+    gap: 10px;
 
+    mat-form-field {
+      font-size: 12px;
+    }
+  }
+
+  .export-btn {
+    margin-bottom: 10px;
+  }
 }

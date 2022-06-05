@@ -38,6 +38,7 @@ import { ErrandFormComponent } from './components/errand-form/errand-form.compon
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CompletedReportFormComponent } from './components/completed-report-form/completed-report-form.component';
+import { DatePipe } from '@angular/common';
 
 const routes: Routes = [
   { path: '', redirectTo: 'errands', pathMatch: 'full' },
@@ -113,6 +114,7 @@ const routes: Routes = [
       useClass: AuthInterceptor,
       multi: true,
     },
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

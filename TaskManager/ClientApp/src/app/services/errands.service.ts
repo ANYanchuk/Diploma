@@ -6,7 +6,7 @@ import { Errand } from '../models/errand.model';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { UserRole } from '../models/user.model';
-import {ReportDto} from "../dto/report.dto";
+import { ReportDto } from '../dto/report.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -34,5 +34,9 @@ export class ErrandsService {
 
   update(id: number, dto: ErrandDto): Observable<Errand> {
     return this._http.put<Errand>(`${this._url}/${id}`, dto);
+  }
+
+  getInfo(): Observable<Errand[]> {
+    return this._http.get<Errand[]>(`${this._url}/info`);
   }
 }
