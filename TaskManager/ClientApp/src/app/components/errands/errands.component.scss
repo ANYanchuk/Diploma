@@ -9,3 +9,13 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.create-errand-btn {
+  flex: 0 0 auto;
+}
+
+.errands-list {
+  app-errand {
+    margin-top: -1px;
+  }
+}

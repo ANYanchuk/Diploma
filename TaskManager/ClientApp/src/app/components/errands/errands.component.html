@@ -1,15 +1,15 @@
 <mat-card class="errands-container">
   <div class="navigation">
     <app-filters></app-filters>
-    <div>
-      <button
-        *ngIf="authUserData?.role === UserRole.LEAD"
-        mat-button
-        (click)="openErrandsForm()"
-      >
-        Створити доручення
-      </button>
-    </div>
+    <button
+      class="create-errand-btn"
+      *ngIf="authUserData?.role === UserRole.LEAD"
+      mat-flat-button
+      color="primary"
+      (click)="openErrandsForm()"
+    >
+      Створити доручення
+    </button>
   </div>
   <div class="errands-list">
     <ng-container *ngIf="errands$ | async as errands">
