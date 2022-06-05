@@ -8,6 +8,7 @@ namespace TaskManager.Core.Services
     {
         public ServiceResponse<IEnumerable<UserEntity>> GetAll();
         public ServiceResponse<UserEntity> GetById(uint id);
+        public ServiceResponse<IEnumerable<UserEntity>> GetWithErrands();
         public ServiceResponse<UserEntity> Edit(UserEntity userEntity, uint id);
         public ServiceResponse<UserEntity> Delete(uint id);
     }

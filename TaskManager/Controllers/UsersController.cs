@@ -111,7 +111,7 @@ namespace TaskManager.Controllers
                 return BadRequest(userResponse.ErrorMessage);
         }
 
-        [HttpDelete( "errands/{errandId}/report")]
+        [HttpDelete("errands/{errandId}/report")]
         public IActionResult DeleteReport(uint errandId)
         {
             ServiceResponse<ReportEntity> response = reportsService.Delete(errandId);
@@ -124,7 +124,7 @@ namespace TaskManager.Controllers
         [Authorize(Roles = "Завідувач")]
         public IActionResult Info()
         {
-            ServiceResponse<IEnumerable<UserEntity>> response = usersService.GetAll();
+            ServiceResponse<IEnumerable<UserEntity>> response = usersService.GetWithJoin();
             if (response.IsSuccessfull)
                 return Ok(mapper.Map<IEnumerable<UserViewModel>>(response.Data));
             else return BadRequest(response.ErrorMessage);
