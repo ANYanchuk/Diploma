@@ -38,6 +38,8 @@ import { ErrandFormComponent } from './components/errand-form/errand-form.compon
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CompletedReportFormComponent } from './components/completed-report-form/completed-report-form.component';
+import { RolesComponent } from './components/roles/roles.component';
+import { RoleFormComponent } from './components/role-form/role-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'errands', pathMatch: 'full' },
@@ -61,6 +63,11 @@ const routes: Routes = [
     component: ProgressReportComponent,
   },
   {
+    path: 'roles',
+    canActivate:[AuthGuard],
+    component: RolesComponent,
+  },
+  {
     path: 'distribution-report',
     canActivate: [AuthGuard],
     component: TrueDistributionReportComponent,
@@ -82,6 +89,8 @@ const routes: Routes = [
     TrueDistributionReportComponent,
     ErrandFormComponent,
     CompletedReportFormComponent,
+    RolesComponent,
+    RoleFormComponent,
   ],
   imports: [
     ReactiveFormsModule,

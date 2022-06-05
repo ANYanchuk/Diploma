@@ -1,0 +1,14 @@
+<div class="errands-list">
+  <ng-container *ngIf="roles$ | async as roles">
+    <div *ngFor="let role of roles">
+      <mat-panel-title class="title"> {{ role }}
+        <button *ngIf="authUserData?.role === UserRole.LEAD" mat-button (click)="deleteRole(role)">
+          Видалити
+        </button>
+      </mat-panel-title>
+    </div>
+    <button *ngIf="authUserData?.role === UserRole.LEAD" mat-button (click)="openRoleForm()">
+      Створити роль
+    </button>
+  </ng-container>
+</div>
