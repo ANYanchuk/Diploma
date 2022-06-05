@@ -9,7 +9,7 @@ using TaskManager.Core.Models.Shared;
 
 namespace TaskManager.Core.Models.Entities;
 
-public class ErrandEntity
+public class ErrandInfo
 {
     public uint Id { get; set; }
     public string? Title { get; set; }
@@ -17,7 +17,7 @@ public class ErrandEntity
     public string ReportFormat { get; set; }
     public string Type { get; set; }
 
-    public List<UserEntity> Users { get; set; }
+    public List<UserInfo> Users { get; set; }
     public DateTime Started { get; set; }
     public DateTime? Deadline { get; set; }
     public string State { get; set; }

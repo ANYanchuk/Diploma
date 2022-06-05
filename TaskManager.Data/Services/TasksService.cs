@@ -144,7 +144,7 @@ public class TasksService : ITasksService
         return new(true);
     }
 
-    public ServiceResponse<IEnumerable<ErrandEntity>> GetInfo()
+    public ServiceResponse<IEnumerable<ErrandInfo>> GetInfo()
     {
         IEnumerable<Errand> errands = context.Errands
             .Include(e => e.Users)
@@ -152,15 +152,26 @@ public class TasksService : ITasksService
             .Include(e => e.ReportFormat).ToList().DistinctBy(e => e.Started);
 
         Dictionary<DateTime, Errand> dict = errands.ToDictionary(e => e.Started);
+        Dictionary<DateTime, ErrandInfo> errandInfo =
+            dict.ToDictionary(d => d.Key, e =>
+                {
+                    ErrandInfo errand = mapper.Map<ErrandInfo>(e.Value);
+                    errand.Users = Enumerable.Empty<UserInfo>().ToList();
+                    return errand;
+                });
 
         foreach (var e in context.Errands)
         {
-            foreach (var u in e.Users)
-                dict[e.Started].Users.Add(u);
+            foreach (ApplicationUser u in e.Users)
+            {
+                UserInfo user = mapper.Map<UserInfo>(u);
+                user.Finished = e.Report?.LastChanged;
+                errandInfo[e.Started].Users.Add(user);
+            }
         }
 
-        var a = dict.ToList().Select(d => d.Value);
+        var a = errandInfo.Select(d => d.Value).ToList();
 
-        return new(true, data: mapper.Map<IEnumerable<ErrandEntity>>(a));
+        return new(true, data: a);
     }
 }

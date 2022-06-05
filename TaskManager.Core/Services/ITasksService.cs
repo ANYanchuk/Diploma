@@ -11,5 +11,5 @@ public interface ITasksService
     public ServiceResponse<ErrandEntity> Add(ErrandEntity task);
     public ServiceResponse<ErrandEntity> Edit(ErrandEntity task, uint id);
     public ServiceResponse<string> Delete(uint id);
-    public ServiceResponse<IEnumerable<ErrandEntity>> GetInfo();
+    public ServiceResponse<IEnumerable<ErrandInfo>> GetInfo();
 }

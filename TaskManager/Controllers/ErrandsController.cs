@@ -78,7 +78,7 @@ namespace TaskManager.Controllers
         [HttpGet("info")]
         public IActionResult Info()
         {
-            ServiceResponse<IEnumerable<ErrandEntity>> response = tasksService.GetInfo();
+            ServiceResponse<IEnumerable<ErrandInfo>> response = tasksService.GetInfo();
             if (response.IsSuccessfull)
                 return Ok(response.Data);
             else
