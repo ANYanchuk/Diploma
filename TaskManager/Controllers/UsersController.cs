@@ -117,8 +117,17 @@ namespace TaskManager.Controllers
             ServiceResponse<ReportEntity> response = reportsService.Delete(errandId);
             if (response.IsSuccessfull)
                 return NoContent();
-            else
-                return BadRequest(response.ErrorMessage);
+            else return BadRequest(response.ErrorMessage);
+        }
+
+        [HttpGet("info")]
+        [Authorize(Roles = "Завідувач")]
+        public IActionResult Info()
+        {
+            ServiceResponse<IEnumerable<UserEntity>> response = usersService.GetAll();
+            if (response.IsSuccessfull)
+                return Ok(mapper.Map<IEnumerable<UserViewModel>>(response.Data));
+            else return BadRequest(response.ErrorMessage);
         }
     }
 }
