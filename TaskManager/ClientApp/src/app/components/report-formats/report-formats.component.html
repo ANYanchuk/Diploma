@@ -1,0 +1,14 @@
+<div class="errands-list">
+  <ng-container *ngIf="formats$ | async as formats">
+    <div *ngFor="let format of formats">
+      <mat-panel-title class="title"> {{ format }}
+        <button *ngIf="authUserData?.role === UserRole.LEAD" mat-button (click)="deleteRole(format)">
+          Видалити
+        </button>
+      </mat-panel-title>
+    </div>
+    <button *ngIf="authUserData?.role === UserRole.LEAD" mat-button (click)="openRoleForm()">
+      Додати формат
+    </button>
+  </ng-container>
+</div>

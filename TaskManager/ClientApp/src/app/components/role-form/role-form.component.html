@@ -1,0 +1,12 @@
+<mat-dialog-content [formGroup]="roleForm" class="errand-form-container">
+  <div class="input-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Назва</mat-label>
+      <input formControlName="role" matInput />
+    </mat-form-field>
+  </div>
+  <button mat-flat-button mat-dialog-close>Відміна</button>
+  <button mat-flat-button color="primary" (click)="submit()">
+    {{ 'Додати' }}
+  </button>
+</mat-dialog-content>
