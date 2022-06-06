@@ -1,11 +1,21 @@
-<div class="nav-menu-container">
+<div *ngIf="authUserData" class="nav-menu-container">
   <button mat-icon-button class="nav-btn" routerLinkActive="active-link">
     <mat-icon>home</mat-icon>
   </button>
-  <button mat-icon-button class="nav-btn" routerLinkActive="active-link">
+  <button
+    *ngIf="authUserData.role === UserRole.LEAD"
+    mat-icon-button
+    class="nav-btn"
+    routerLinkActive="active-link"
+  >
     <mat-icon>person</mat-icon>
   </button>
-  <button mat-icon-button class="nav-btn" routerLinkActive="active-link">
+  <button
+    *ngIf="authUserData.role === UserRole.LEAD"
+    mat-icon-button
+    class="nav-btn"
+    routerLinkActive="active-link"
+  >
     <mat-icon>group</mat-icon>
   </button>
   <button
@@ -17,6 +27,7 @@
     <mat-icon>bar_chart</mat-icon>
   </button>
   <button
+    *ngIf="authUserData.role === UserRole.LEAD"
     mat-icon-button
     class="nav-btn"
     [matMenuTriggerFor]="menu"

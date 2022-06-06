@@ -50,7 +50,7 @@
         Редагувати
       </button>
     </ng-container>
-    <ng-container *ngIf="authUserData?.role === UserRole.LECTURER">
+    <ng-container *ngIf="authUserData?.role !== UserRole.LEAD">
       <button
         mat-flat-button
         color="warn"

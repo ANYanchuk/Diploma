@@ -3,13 +3,21 @@
 }
 
 mat-panel-title {
-  width: 150px;
+  width: 350px;
 }
 
 .info {
   display: flex;
   align-items: center;
   gap: 40px;
+}
+
+.type {
+  width: 200px;
+}
+
+.dates {
+  width: 200px;
 }
 
 .title {

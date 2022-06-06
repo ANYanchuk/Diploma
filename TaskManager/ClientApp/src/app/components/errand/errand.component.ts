@@ -3,7 +3,7 @@ import { AuthService, AuthUserData } from '../../services/auth.service';
 import { UserRole } from '../../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrandFormComponent } from '../errand-form/errand-form.component';
-import { Errand } from '../../models/errand.model';
+import { Errand, ErrandState } from '../../models/errand.model';
 import { CompletedReportFormComponent } from '../completed-report-form/completed-report-form.component';
 import { UsersService } from '../../services/users.service';
 import { ErrandsService } from '../../services/errands.service';
@@ -40,7 +40,10 @@ export class ErrandComponent implements OnInit {
       .afterClosed()
       .subscribe(errand => {
         if (errand) {
+          const users = this.errand.users;
           this.errand = errand;
+          this.errand.users = users;
+          this.errand.state = ErrandState.IN_PROGRESS;
         }
       });
   }
