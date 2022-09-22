@@ -1,15 +1,15 @@
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 
+using static TaskManager.Data.Helpers.TokenHelper;
 using TaskManager.Core.Constants;
-using TaskManager.Core.Services;
 using TaskManager.Core.Models;
 using TaskManager.Core.Models.Entities;
-using TaskManager.Core.Models.Data;
+using TaskManager.Core.Services;
 using TaskManager.Data.DbContexts;
 using TaskManager.Data.Helpers;
 
-using static TaskManager.Data.Helpers.TokenHelper;
+using TaskManager.Data.Models;
 
 namespace TaskManager.Data.Services
 {

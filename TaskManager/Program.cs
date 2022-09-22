@@ -1,18 +1,16 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using TaskManager.Middlewares;
-
-using TaskManager.Mapper;
-
-using TaskManager.Core.Services;
 using TaskManager.Core.Mapper;
+using TaskManager.Core.Services;
 using TaskManager.Data.DbContexts;
 using TaskManager.Data.Services;
+using TaskManager.Mapper;
+using TaskManager.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 

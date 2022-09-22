@@ -3,7 +3,7 @@ using TaskManager.Core.Constants;
 using TaskManager.Data.DbContexts;
 using TaskManager.Data.Helpers;
 using TaskManager.Core.Models;
-using TaskManager.Core.Models.Data;
+using TaskManager.Data.Models;
 using TaskManager.Core.Models.Entities;
 using TaskManager.Core.Models.Shared;
 using TaskManager.Core.Services;

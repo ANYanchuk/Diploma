@@ -5,9 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using TaskManager.Core.Models.Shared;
-
-namespace TaskManager.Core.Models.Data;
+namespace TaskManager.Data.Models;
 
 public class Errand
 {

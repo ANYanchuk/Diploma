@@ -1,15 +1,16 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+
+using AutoMapper;
+
+using TaskManager.Core.Constants;
 using TaskManager.Core.Models;
-using TaskManager.Core.Models.Data;
 using TaskManager.Core.Models.Entities;
 using TaskManager.Core.Models.Shared;
 using TaskManager.Core.Services;
-using TaskManager.Core.Constants;
-
 using TaskManager.Data.DbContexts;
+using TaskManager.Data.Models;
 
-namespace TaskManager.Data.Services;
+namespace TaskManager.Core.Services;
 
 public class TasksService : ITasksService
 {
@@ -98,9 +99,9 @@ public class TasksService : ITasksService
 
         int result = context.SaveChanges();
         if (result != 0)
-            return new ServiceResponse<ErrandEntity>(true);
+            return new(true);
         else
-            return new ServiceResponse<ErrandEntity>(false, ServiceResponceConstants.NothingChanged);
+            return new(false, ServiceResponceConstants.NothingChanged);
     }
 
     public ServiceResponse<ErrandEntity> Edit(ErrandEntity errandEntity, uint id = 0)
@@ -110,7 +111,7 @@ public class TasksService : ITasksService
             .FirstOrDefault(e => e.Id == id);
 
         if (errand is null)
-            return new ServiceResponse<ErrandEntity>(false, ServiceResponceConstants.EntityNotFound);
+            return new(false, ServiceResponceConstants.EntityNotFound);
 
         errandEntity.Id = id;
         IEnumerable<uint> ids = errandEntity.Users.Select(u => u.Id);
@@ -124,7 +125,7 @@ public class TasksService : ITasksService
             errand.Users.Add(user);
 
         errand.State = TaskState.Opened;
-
+        context.Errands.Update(errand);
         int result = context.SaveChanges();
 
         errand = context.Errands

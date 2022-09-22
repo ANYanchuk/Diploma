@@ -1,18 +1,18 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Data.DbContexts;
+using TaskManager.Data.Models;
 using TaskManager.Core.Constants;
-using TaskManager.Core.Models.Data;
 using TaskManager.Core.Models;
 using TaskManager.Core.Services;
 
-namespace TaskManager.Data.Services;
+namespace TaskManager.Core.Services;
 
-public class RolesService : IRolesService
+public class ReportFormatsService : IReportFormatsService
 {
     private readonly ApplicationDbContext context;
     private readonly IMapper mapper;
-    public RolesService(ApplicationDbContext repository, IMapper mapper)
+    public ReportFormatsService(ApplicationDbContext repository, IMapper mapper)
     {
         context = repository;
         this.mapper = mapper;
@@ -20,14 +20,14 @@ public class RolesService : IRolesService
 
     public ServiceResponse<IEnumerable<string>> GetAll()
     {
-        IEnumerable<ApplicationRole> roles = context.Roles;
-        return new(true, data: mapper.Map<IEnumerable<string>>(roles));
+        IEnumerable<ReportFormat> formats = context.ReportFormats;
+        return new(true, data: mapper.Map<IEnumerable<string>>(formats));
     }
 
-    public ServiceResponse<string> Add(string role)
+    public ServiceResponse<string> Add(string format)
     {
-        ApplicationRole appRole = new(role);
-        context.Roles.Add(appRole);
+        ReportFormat reportFormat = new(format);
+        context.ReportFormats.Add(reportFormat);
         int result = context.SaveChanges();
         if (result != 0)
             return new ServiceResponse<string>(true);
@@ -35,13 +35,13 @@ public class RolesService : IRolesService
             return new ServiceResponse<string>(false, ServiceResponceConstants.NothingChanged);
     }
 
-    public ServiceResponse<string> Delete(string role)
+    public ServiceResponse<string> Delete(string format)
     {
-        ApplicationRole? appRole = context.Roles.FirstOrDefault(e => e.Name == role);
-        if (appRole is null)
+        ReportFormat? reportFormat = context.ReportFormats.FirstOrDefault(e => e.Name == format);
+        if (reportFormat is null)
             return new(false, message: ServiceResponceConstants.EntityNotFound);
 
-        context.Roles.Remove(appRole);
+        context.ReportFormats.Remove(reportFormat);
         context.SaveChanges();
         return new(true);
     }

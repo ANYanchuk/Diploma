@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using TaskManager.Data.DbContexts;
 using TaskManager.Core.Constants;
 using TaskManager.Core.Models;
-using TaskManager.Core.Models.Data;
+using TaskManager.Data.Models;
 using TaskManager.Core.Models.Entities;
 using TaskManager.Core.Services;
 
-namespace TaskManager.Data.Services;
+namespace TaskManager.Core.Services;
 
 public class UsersService : IUsersService
 {

@@ -1,7 +1,6 @@
 using AutoMapper;
-
-using TaskManager.Core.Models.Data;
 using TaskManager.Core.Models.Entities;
+using TaskManager.Data.Models;
 
 namespace TaskManager.Core.Mapper
 {

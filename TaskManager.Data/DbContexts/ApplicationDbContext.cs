@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using TaskManager.Core.Models.Data;
+using TaskManager.Data.Models;
 
 namespace TaskManager.Data.DbContexts;
 public class ApplicationDbContext : DbContext

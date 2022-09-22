@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security;
 using System.Security.Claims;
 using System.Text;
-using TaskManager.Core.Models.Data;
+using TaskManager.Data.Models;
 
 namespace TaskManager.Data.Helpers;
 

@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 using TaskManager.Data.DbContexts;
+using TaskManager.Data.Models;
 using TaskManager.Core.Services;
 using TaskManager.Core.Models.Entities;
-using TaskManager.Core.Models.Data;
 
 namespace TaskManager.Data.Services;
 

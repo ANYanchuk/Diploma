@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TaskManager.Core.Models.Data;
+namespace TaskManager.Data.Models;
 
 public class UploadedFile
 {
