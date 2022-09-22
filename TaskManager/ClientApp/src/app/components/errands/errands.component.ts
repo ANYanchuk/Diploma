@@ -46,4 +46,8 @@ export class ErrandsComponent implements OnInit {
         this._errandsLoadTrigger.next();
       });
   }
+
+  onErrandDelete(): void {
+    this._errandsLoadTrigger.next();
+  }
 }

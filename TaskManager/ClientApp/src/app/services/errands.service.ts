@@ -36,6 +36,10 @@ export class ErrandsService {
     return this._http.put<Errand>(`${this._url}/${id}`, dto);
   }
 
+  delete(id: number): Observable<void> {
+    return this._http.delete<void>(`${this._url}/${id}`);
+  }
+
   getInfo(): Observable<Errand[]> {
     return this._http.get<Errand[]>(`${this._url}/info`);
   }

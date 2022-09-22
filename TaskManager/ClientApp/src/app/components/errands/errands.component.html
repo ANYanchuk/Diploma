@@ -13,7 +13,11 @@
   </div>
   <div class="errands-list">
     <ng-container *ngIf="errands$ | async as errands">
-      <app-errand *ngFor="let errand of errands" [errand]="errand"></app-errand>
+      <app-errand
+        *ngFor="let errand of errands"
+        [errand]="errand"
+        (deleted)="onErrandDelete()"
+      ></app-errand>
     </ng-container>
   </div>
 </mat-card>

@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthService, AuthUserData } from '../../services/auth.service';
 import { UserRole } from '../../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrandFormComponent } from '../errand-form/errand-form.component';
-import { Errand } from '../../models/errand.model';
+import { Errand, ErrandState } from '../../models/errand.model';
 import { CompletedReportFormComponent } from '../completed-report-form/completed-report-form.component';
 import { UsersService } from '../../services/users.service';
+import { ErrandsService } from '../../services/errands.service';
 
 @Component({
   selector: 'app-errand',
@@ -13,6 +14,7 @@ import { UsersService } from '../../services/users.service';
   styleUrls: ['./errand.component.scss'],
 })
 export class ErrandComponent implements OnInit {
+  @Output() deleted = new EventEmitter();
   @Input() errand: Errand;
 
   readonly UserRole = UserRole;
@@ -22,6 +24,7 @@ export class ErrandComponent implements OnInit {
     private readonly _auth: AuthService,
     private readonly _dialog: MatDialog,
     private readonly _usersService: UsersService,
+    private readonly _errandsService: ErrandsService,
   ) {
     this.authUserData = this._auth.user;
   }
@@ -36,7 +39,12 @@ export class ErrandComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(errand => {
-        this.errand = errand;
+        if (errand) {
+          const users = this.errand.users;
+          this.errand = errand;
+          this.errand.users = users;
+          this.errand.state = ErrandState.IN_PROGRESS;
+        }
       });
   }
 
@@ -55,6 +63,12 @@ export class ErrandComponent implements OnInit {
   deleteReport() {
     this._usersService.deleteReport(this.errand.id).subscribe(() => {
       this.errand.report = null;
+    });
+  }
+
+  delete() {
+    this._errandsService.delete(this.errand.id).subscribe(() => {
+      this.deleted.emit();
     });
   }
 }

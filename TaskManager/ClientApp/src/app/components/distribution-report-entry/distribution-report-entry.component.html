@@ -31,12 +31,16 @@
 
     <ng-container matColumnDef="dateFrom">
       <th mat-header-cell *matHeaderCellDef>Дата свторення</th>
-      <td mat-cell *matCellDef="let element">{{ element.started | date }}</td>
+      <td style="width: 100px" mat-cell *matCellDef="let element">
+        {{ element.started | date }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="dateTo">
       <th mat-header-cell *matHeaderCellDef>Дедлайн</th>
-      <td mat-cell *matCellDef="let element">{{ element.deadline | date }}</td>
+      <td style="width: 100px" mat-cell *matCellDef="let element">
+        {{ element.deadline | date }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="dateCompleted">

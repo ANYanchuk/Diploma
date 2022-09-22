@@ -3,7 +3,7 @@
 
   .errand-header {
     .title {
-      width: 150px;
+      width: 350px;
       align-items: center;
     }
 
@@ -11,6 +11,16 @@
       display: flex;
       align-items: center;
       gap: 40px;
+
+      .dates {
+        width: 200px;
+      }
+      .type {
+        width: 200px;
+      }
+      .status {
+        width: 200px;
+      }
     }
   }
   .errand-body {
