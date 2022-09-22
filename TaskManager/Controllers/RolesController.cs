@@ -1,9 +1,8 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-
-using TaskManager.Core.Services;
+using Microsoft.AspNetCore.Mvc;
 using TaskManager.Core.Models;
+using TaskManager.Core.Services;
 
 namespace TaskManager.Controllers
 {
