@@ -1,12 +1,4 @@
 #pragma warning disable CS8618
-
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-using TaskManager.Core.Models.Shared;
-
 namespace TaskManager.Core.Models.Entities;
 
 public class ErrandEntity

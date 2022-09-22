@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using TaskManager.Data.DbContexts;
 using TaskManager.Core.Constants;
 using TaskManager.Data.Models;

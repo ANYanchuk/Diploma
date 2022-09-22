@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using TaskManager.Data.Models;
 
 namespace TaskManager.Data.DbContexts;

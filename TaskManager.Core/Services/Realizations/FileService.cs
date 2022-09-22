@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
+using TaskManager.Core.Services;
 using TaskManager.Data.DbContexts;
 using TaskManager.Data.Models;
-using TaskManager.Core.Services;
-using TaskManager.Core.Models.Entities;
 
 namespace TaskManager.Data.Services;
 

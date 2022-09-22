@@ -1,7 +1,5 @@
 #pragma warning disable CS8618
-
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 
 namespace TaskManager.Core.Models.Entities;
 

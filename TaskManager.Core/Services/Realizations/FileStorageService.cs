@@ -1,7 +1,7 @@
-using TaskManager.Core.Services;
-using TaskManager.Core.Models;
-using TaskManager.Data.Helpers;
 using static TaskManager.Data.Helpers.EnumerableExtentions;
+using TaskManager.Core.Models;
+using TaskManager.Core.Services;
+using TaskManager.Data.Helpers;
 
 namespace TaskManager.Data.Services;
 

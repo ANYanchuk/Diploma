@@ -1,6 +1,5 @@
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
-
 using static TaskManager.Data.Helpers.TokenHelper;
 using TaskManager.Core.Constants;
 using TaskManager.Core.Models;

@@ -1,14 +1,13 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TaskManager.Core.Constants;
-using TaskManager.Data.DbContexts;
-using TaskManager.Data.Helpers;
 using TaskManager.Core.Models;
-using TaskManager.Data.Models;
 using TaskManager.Core.Models.Entities;
 using TaskManager.Core.Models.Shared;
 using TaskManager.Core.Services;
-
-using Microsoft.EntityFrameworkCore;
+using TaskManager.Data.DbContexts;
+using TaskManager.Data.Helpers;
+using TaskManager.Data.Models;
 
 namespace TaskManager.Data.Services;
 
